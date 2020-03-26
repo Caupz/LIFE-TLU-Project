@@ -22,6 +22,7 @@ section.active {
 	margin-top: 50px;
 }
 .letter {
+	cursor: pointer;
     font-size: 2em;
     padding: 4px 14px;
     border-radius: 4px;
@@ -34,7 +35,47 @@ section.active {
     box-shadow: 2px 2px 4px 2px #D4D4D4;
 }
 
+#letter-space {
+	width: 280px !important;
+	text-align: center;
+}
+
+#dummy {
+	visibility: hidden;
+}
+
+#error-notifier {
+	display: none;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+#error-notifier.active {
+	display: block;
+	animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+	transform: translate3d(0, 0, 0);
+	backface-visibility: hidden;
+	perspective: 1000px;
+}
+
 #enter {
+	cursor: pointer;
     font-size: 2em;
     padding: 4px 6px;
     border: none;
@@ -48,9 +89,9 @@ section.active {
 	margin: 0;
 }
 
-.letter.pressed {
-	background: #56a615;
-	transition: 0.1s ease;
+.letter.active {
+	background: #bb153b;
+	transition: 0.05s ease;
 	box-shadow: none;
 }
 
@@ -73,4 +114,26 @@ section.active {
 
 .prompt-container p {
 	margin: 0;
+}
+
+.prompt-text img {
+	max-width: 150px;
+}
+
+#results img {
+	max-width: 75px;
+}
+
+#results tr {
+	background: #BB153B;
+	color: #FFF;
+}
+
+#results tr.correct {
+	background: #16C60C;
+}
+
+#results tr:first-child, .results tr:first-child td {
+	background: #000 !important;
+	color: #FFF !important;
 }

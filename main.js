@@ -5,19 +5,28 @@ let promptTexts = [
 	{id:3, question:"Some text about interviews", keyword:"interview"},
 	{id:4, question:"Some text about case studies", keyword:"case study"},
 	{id:5, question:"Some text about observations", keyword:"observation"},
+	{id:6, question:"https://avatars1.githubusercontent.com/u/13436812?s=460&v=4", keyword:"caupo-profile"},
 ];
 let promptsInserted = 0;
 let activePrompts = [];
 let insertedKeywords = [];
 let maxPrompts = 5;
 let activePrompt = null;
-let activeSection = "";
+let activeSection = "main-menu";
+let keywordElementInput = document.querySelector("#keyword");
+let errorCanBeShown = true;
+let summaryTable = document.querySelector("#results");
+let currentPromptElement = document.querySelector("#current-prompt");
+let maxPromptElement = document.querySelector("#max-prompt");
+let promptElement = document.querySelector("#prompt-text");
+let errorContainer = document.querySelector("#error-notifier");
+let enterButton = document.querySelector("#enter");
+let dummyButton = document.querySelector("#dummy-btn");
 
-// TODO kui question on http algusega link, siis tehakse image
-// TODO KEYBOARD nupud mappida kui gameplay active
-// TODO Enter button listener vajutab insertedKeyword kui gameplay active
-// TODO Summary page
-// TODO insert keyword buttonile curosr:pointer
+// TODO klahvide sound effect Stas pidi otsima
+// TODO klahvide sound effect Martin pidi otsima
+
+// TODO console.log cleanup when the project is done
 
 function GetAllSections() {
 	return document.querySelectorAll("section");
@@ -64,7 +73,10 @@ function GetRandomItemsFrom(arr, howManyItems) {
 }
 
 function StartGame() {
+	activePrompts = [];
+	insertedKeywords = [];
 	promptsInserted = -1;
+	keywordElementInput.value = "";
 	activePrompts = GetRandomItemsFrom(promptTexts, 5);
 	SetNewToActivePrompt();
 	console.log(activePrompt);
@@ -77,15 +89,41 @@ function StartGame() {
 }
 
 function SetCurrentPromptLabel() {
-	document.querySelector("#current-prompt").innerText = (promptsInserted + 1);
+	currentPromptElement.innerText = (promptsInserted + 1);
 }
 
 function SetMaxPromptLabel() {
-	document.querySelector("#max-prompt").innerText = maxPrompts;
+	maxPromptElement.innerText = maxPrompts;
+}
+
+function GetImageElFromLink(linkUrl) {	
+	let imageEl = document.createElement("img");
+	imageEl.alt = "Prompt image";
+	imageEl.src = linkUrl;
+	return imageEl;
+}
+
+function IsQuestionImage(question) {
+	return (question.includes("http://") || question.includes("https://"));
 }
 
 function SetActiveTextToPrompt() {
-	document.querySelector("#prompt-text").innerText = activePrompt.question;
+	HideError();
+	
+	if(IsQuestionImage(activePrompt.question)) {
+		promptElement.innerText = "";
+		let imageEl = GetImageElFromLink(activePrompt.question);
+		promptElement.appendChild(imageEl);
+		return;
+	}
+	
+	promptElement.innerText = activePrompt.question;
+	errorCanBeShown = false;
+	setTimeout(EnableErrors, 100);
+}
+
+function EnableErrors() {
+	errorCanBeShown = true;
 }
 
 function SetNewToActivePrompt() {
@@ -98,11 +136,47 @@ function SetToAnswers(keyword) {
 	insertedKeywords.push({id:activePrompt.id, keyword:keyword});
 }
 
-function InsertKeyword() {
-	let keywordElement = document.querySelector("#keyword");
-	let keywordValue = keywordElement.value;
+function GetPromptById(id) {
+	for(let i = 0, item; item = promptTexts[i]; i++) {
+		if(item.id === id) {
+			return item;
+		}
+	}
+	return {id:-1,question:"INVALID PROMPT",keyword:"INVALID PROMPT"};
+}
+
+function ShowError(message) {
+	if(!errorCanBeShown) {
+		return;
+	}
+	
+	if(errorContainer !== undefined && errorContainer !== null) {
+		errorContainer.classList.add("active");
+		errorContainer.innerText = "ERROR: "+message;
+	}
+}
+
+function HideError() {	
+	if(errorContainer !== undefined && errorContainer !== null) {
+		errorContainer.classList.remove("active");
+		errorContainer.innerText = "";
+	}
+}
+
+function InsertKeyword(event) {
+	let keywordValue = keywordElementInput.value;
+	if(event !== undefined) {
+		console.log("keycode", event.keyCode);
+		event.preventDefault();
+	}
+	
+	if(keywordValue.length < 3) {
+		ShowError("Keyword must be atleast 3 symbols long.");
+		return;
+	}
+	
 	SetToAnswers(keywordValue);
-	keywordElement.value = "";
+	keywordElementInput.value = "";
 	SetNewToActivePrompt();
 	
 	if(promptsInserted >= maxPrompts) {
@@ -114,16 +188,151 @@ function InsertKeyword() {
 	SetCurrentPromptLabel();
 }
 
+function GetKeyWithLetter(letter) {
+	return document.querySelector("#letter-"+letter);
+}
+
+function KeyPressed(letter) {
+	console.log("KEY PRESSED ["+letter+"]");
+	HideError();
+	
+	let buttonElement = GetKeyWithLetter(letter);
+	if(buttonElement !== null && buttonElement !== undefined) {
+		buttonElement.classList.add("active");
+		setTimeout(KeyNonActive, 200, letter);
+	} else {
+		console.log("ERROR: Button element undefined or null (1)");
+	}
+	
+	if(letter === "space") {
+		keywordElementInput.value += " ";	
+	} else {
+		keywordElementInput.value = keywordElementInput.value+letter.toUpperCase();	
+	}
+	dummyButton.focus(); // NOTE(Caupo 26.03.2020): Fixes case where player clickes on button and then tries to press enter. Without this row the same letter is clicked.
+}
+
+function KeyNonActive(letter) {
+	let buttonElement = GetKeyWithLetter(letter);
+	
+	if(buttonElement !== null && buttonElement !== undefined) {
+		buttonElement.classList.remove("active");
+	} else {
+		console.log("ERROR: Button element undefined or null (2)");
+	}
+}
+
 function ShowSummary() {
 	console.log("SUMMARY");
 	console.log("Inserted keywords: "+promptsInserted);
 	console.log("Insrted keyword data: ", insertedKeywords);
 	
-	// todo mõelda välja kuidas
+	AddRowToSummary("Your answer", "Prompt text", "Computer answer");
 	
-	/* todo nullida 
-		promptsInserted, 
-		activePrompts = [], 
-		insertedKeywords = []
-	*/
+	for(let i = 0, insertedKeyword; insertedKeyword = insertedKeywords[i]; i++) {
+		let thisPrompt = GetPromptById(insertedKeyword.id);
+		console.log("ShowSummary", thisPrompt, thisPrompt.question);
+		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword);
+	}
 }
+
+function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
+	let row = document.createElement("tr");
+	let yourTd = document.createElement("td");
+	let promptTd = document.createElement("td");
+	let computerTd = document.createElement("td");
+	
+	yourTd.innerText = yourAnswer.toUpperCase();
+	computerTd.innerText = computerAnswer.toUpperCase();
+	
+	if(IsQuestionImage(promptText)) {
+		let imageEl = GetImageElFromLink(promptText);
+		promptTd.appendChild(imageEl);
+	} else {
+		promptTd.innerText = promptText;
+	}
+	
+	if(yourAnswer.toLowerCase() === computerAnswer.toLowerCase()) {
+		row.classList.add("correct");
+	}
+	
+	row.appendChild(yourTd);
+	row.appendChild(promptTd);
+	row.appendChild(computerTd);
+	summaryTable.appendChild(row);
+}
+
+function DeleteLastCharOfInput() {
+	let keywordCurrently = keywordElementInput.value+"";
+	if(keywordCurrently.length > 0) {
+		keywordElementInput.value = keywordCurrently.substring(0, keywordCurrently.length - 1);
+	}
+}
+
+document.body.onkeyup = function(e){
+    if(e.keyCode == 32){
+        KeyPressed("space");
+    }
+}
+
+document.onkeypress = function (e) {
+	e.preventDefault();
+	HideError();
+	
+	if(activeSection === "main-menu" && e.keyCode == 13) {
+		ShowSection("gameplay");
+		return;
+	} else if(activeSection === "summary" && e.keyCode == 13) {
+		ShowSection("main-menu");
+		return;
+	} else if(activeSection !== "gameplay") {
+		return;
+	}
+	
+    e = e || window.event;
+	
+	console.log("keycode", e.keyCode);
+	
+	switch(e.keyCode) {
+		case 81:case 113: KeyPressed("Q"); break;
+		case 87:case 119: KeyPressed("W"); break;
+		case 69:case 101: KeyPressed("E"); break;
+		case 82:case 114: KeyPressed("R"); break;
+		case 84:case 116: KeyPressed("T"); break;
+		case 89:case 121: KeyPressed("Y"); break;
+		case 85:case 117: KeyPressed("U"); break;
+		case 73:case 105: KeyPressed("I"); break;
+		case 79:case 111: KeyPressed("O"); break;
+		case 80:case 112: KeyPressed("P"); break;
+		case 65:case 97: KeyPressed("A"); break;
+		case 83:case 115: KeyPressed("S"); break;
+		case 68:case 100: KeyPressed("D"); break;
+		case 70:case 102: KeyPressed("F"); break;
+		case 71:case 103: KeyPressed("G"); break;
+		case 72:case 104: KeyPressed("H"); break;
+		case 74:case 106: KeyPressed("J"); break;
+		case 75:case 107: KeyPressed("K"); break;
+		case 76:case 108: KeyPressed("L"); break;
+		case 90:case 122: KeyPressed("Z"); break;
+		case 88:case 120: KeyPressed("X"); break;
+		case 67:case 99: KeyPressed("C"); break;
+		case 86:case 118: KeyPressed("V"); break;
+		case 66:case 98: KeyPressed("B"); break;
+		case 78:case 110: KeyPressed("N"); break;
+		case 77:case 109: KeyPressed("M"); break;
+		case 32: KeyPressed("space"); break;
+		case 13: InsertKeyword(); break;
+		case 8: DeleteLastCharOfInput(); break;
+	} 
+};
+
+window.addEventListener('keydown',function(e) {
+	if(e.keyIdentifier=='U+0008'||e.keyIdentifier=='Backspace'||e.keyCode==8) {
+		e.preventDefault();
+		DeleteLastCharOfInput();
+		return false;
+	}
+	if(e.keyIdentifier=='Space'||e.keyCode==32) {
+		e.preventDefault();
+	}
+},true);

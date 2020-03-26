@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>LIFE Project - Bureau</title>
 <link rel="stylesheet" type="text/css" href="style.css">
-<script src="main.js"></script> 
+<script src="main.js" defer></script> 
 </head>
 
 <body>
@@ -39,9 +39,10 @@ $keyboard = [
 </section>
 
 <section id="gameplay">
-	<h1>Please insert the keyword to the input <span id="current-prompt"></span>/<span id="max-prompt"></span></h1>
+	<h2>Please insert the keyword to the input <span id="current-prompt"></span>/<span id="max-prompt"></span></h2>
 	<div class="prompt-container">
 		<p id="prompt-text">Error on setting prompt!</p>
+		<p id="error-notifier"></p>
 	</div>
 	<div class="keyword-container">
 		<input id="keyword" placeholder="Insert keyword... (e.g. Corona)" />
@@ -50,19 +51,26 @@ $keyboard = [
 	<div class="keyboard-container">
 		<?php foreach($keyboard as $keyrow): ?>
 			<?php foreach($keyrow as $letter): ?>
-				<button class="letter" data-letter="<?= $letter ?>"><?= $letter ?></button>
+				<button id="letter-<?= $letter ?>" onclick="KeyPressed('<?= $letter ?>')" class="letter" data-letter="<?= $letter ?>"><?= $letter ?></button>
 			<?php endforeach; ?>
 			<br>
 		<?php endforeach; ?>
+		<br>
+		<button id="letter-space" onclick="KeyPressed('space')" class="letter" data-letter="space">_</button>
 	</div>
 </section>
 
 <section id="summary">
+	<h2>Summary</h2>
+	<div class="end-content">
+		<table id="results">
+		</table>
+	</div>
 	<button onclick="ShowSection('main-menu')">Back to Main Menu</button>
 </section>
 
 </div>
-
+<button id="dummy-btn"></button>
 </body>
 
 </html> 

@@ -1,3 +1,9 @@
+let keyboard = [
+	["Q","W","E","R","T","Y","U","I","O","P"],
+	["A","S","D","F","G","H","J","K","L",],
+	["Z","X","C","V","B","N","M",],
+	["_",],
+];
 let promptTexts = [
 	{id:0, question:"Some text about quizis", keyword:"quiz"},
 	{id:1, question:"Some text about surveys", keyword:"survey"},
@@ -22,11 +28,32 @@ let promptElement = document.querySelector("#prompt-text");
 let errorContainer = document.querySelector("#error-notifier");
 let enterButton = document.querySelector("#enter");
 let dummyButton = document.querySelector("#dummy-btn");
+let similarityElement = document.querySelector("#similarity");
+let correctAnswers = 0;
 
 // TODO klahvide sound effect Stas pidi otsima
 // TODO klahvide sound effect Martin pidi otsima
 
 // TODO console.log cleanup when the project is done
+
+function InitKeyboard() {
+	let keyboardContainer = document.querySelector(".keyboard-container");
+	
+	for(let r = 0, row; row = keyboard[r]; r++) {
+		for(let i = 0, letter; letter = row[i]; i++) {
+			let btnElement = document.createElement("button");
+			btnElement.id = "letter-"+letter;
+			btnElement.innerText = letter;
+			btnElement.onclick = "KeyPressed('"+letter+"')";
+			btnElement.className = "letter";
+			keyboardContainer.appendChild(btnElement);
+		}
+		
+		keyboardContainer.appendChild(document.createElement("br"));
+	}
+	
+	keyboardContainer.appendChild(document.createElement("br"));
+}
 
 function GetAllSections() {
 	return document.querySelectorAll("section");
@@ -76,6 +103,7 @@ function StartGame() {
 	activePrompts = [];
 	insertedKeywords = [];
 	promptsInserted = -1;
+	correctAnswers = 0;
 	keywordElementInput.value = "";
 	activePrompts = GetRandomItemsFrom(promptTexts, 5);
 	SetNewToActivePrompt();
@@ -83,6 +111,7 @@ function StartGame() {
 	SetActiveTextToPrompt();
 	SetCurrentPromptLabel();
 	SetMaxPromptLabel();
+	summaryTable.innerHTML = "";
 	
 	console.log("GAME STARTED");
 	console.log("PROMPTS: ", activePrompts);
@@ -204,7 +233,7 @@ function KeyPressed(letter) {
 		console.log("ERROR: Button element undefined or null (1)");
 	}
 	
-	if(letter === "space") {
+	if(letter === "_") {
 		keywordElementInput.value += " ";	
 	} else {
 		keywordElementInput.value = keywordElementInput.value+letter.toUpperCase();	
@@ -234,6 +263,8 @@ function ShowSummary() {
 		console.log("ShowSummary", thisPrompt, thisPrompt.question);
 		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword);
 	}
+	
+	similarity.innerHTML = "Similary between you and computer:<br> <strong>"+CalculateSimilarities()+"%</strong>";
 }
 
 function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
@@ -254,6 +285,7 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
 	
 	if(yourAnswer.toLowerCase() === computerAnswer.toLowerCase()) {
 		row.classList.add("correct");
+		correctAnswers++;
 	}
 	
 	row.appendChild(yourTd);
@@ -269,9 +301,13 @@ function DeleteLastCharOfInput() {
 	}
 }
 
+function CalculateSimilarities() {
+	return correctAnswers/maxPrompts*100;
+}
+
 document.body.onkeyup = function(e){
     if(e.keyCode == 32){
-        KeyPressed("space");
+        KeyPressed("_");
     }
 }
 
@@ -320,10 +356,10 @@ document.onkeypress = function (e) {
 		case 66:case 98: KeyPressed("B"); break;
 		case 78:case 110: KeyPressed("N"); break;
 		case 77:case 109: KeyPressed("M"); break;
-		case 32: KeyPressed("space"); break;
+		case 32: KeyPressed("_"); break;
 		case 13: InsertKeyword(); break;
 		case 8: DeleteLastCharOfInput(); break;
-	} 
+	}
 };
 
 window.addEventListener('keydown',function(e) {
@@ -336,3 +372,5 @@ window.addEventListener('keydown',function(e) {
 		e.preventDefault();
 	}
 },true);
+
+InitKeyboard();

@@ -1,6 +1,28 @@
+html, 
 body {
+    height: 100%;
+}
+
+body {
+	color: #FFF;
 	margin: 0 auto;
-    font-family: Arial;
+    font-family: Verdana;
+	background-color: #9c0a26;
+	background: linear-gradient(10deg, #4a0026 0%, #9c0a26 50%, #fd4300 100%);
+}
+
+button {
+	cursor: pointer;
+}
+
+h1 {
+	margin-top: 0;
+	padding-top: 75px;
+	font-size: 3em;
+}
+
+h1, h2, h3 {
+	text-transform: uppercase;
 }
 
 section {
@@ -11,10 +33,23 @@ section.active {
 	display: block;
 }
 
+#main-menu > div.description, #main-menu > div.creators {
+	display: inline-block;
+	width: 49%;
+}
+
+#main-menu table tr td {
+	text-align: left;
+}
+
+#main-menu table {
+	float: right;
+}
+
 .container {
 	width: 1024px;
 	margin: 0 auto;
-	margin-top: 150px;
+	padding-top: 150px;
 	text-align: center;
 }
 
@@ -23,24 +58,23 @@ section.active {
 }
 .letter {
 	cursor: pointer;
-    font-size: 2em;
-    padding: 4px 14px;
-    border-radius: 4px;
-    border: none;
-    background: #004ba8;
-    color: white;
-    margin: 2px;
-    width: 53px;
-    height: 53px;
-    box-shadow: 2px 2px 4px 2px #D4D4D4;
+	font-size: 2em;
+	padding: 4px 14px;
+	border-radius: 4px;
+	background: #500126;
+	color: white;
+	margin: 2px;
+	width: 53px;
+	height: 53px;
+	border: 2px solid #FFF;
 }
 
-#letter-space {
+#letter-_ {
 	width: 280px !important;
 	text-align: center;
 }
 
-#dummy {
+#dummy-btn {
 	visibility: hidden;
 }
 
@@ -80,9 +114,11 @@ section.active {
     padding: 4px 6px;
     border: none;
     color: white;
-    background: #16c60c;
+    background: #500126;
     border-radius: 4px;
     padding-bottom: 7px;
+	width: 54px;
+	border: 2px solid #FFF;
 }
 
 #enter p {
@@ -99,17 +135,29 @@ section.active {
     font-size: 2em;
     width: 562px;
     border: none;
-    border-bottom: 2px solid #C5C5C5;
+	border-bottom: 2px solid #FFF;
+	color: #FFF;
+	background: transparent;
+}
+
+#play-btn, #back-to-main-menu {
+    background: #500126;
+	border-bottom: 2px solid #FFF;
+	color: #FFF;
+	font-size: 2em;
+	border-radius: 4px;
+	padding: 0 20px;
 }
 
 .prompt-container {
     padding: 10px;
-    font-size: 1.3em;
-    border-radius: 4px;
-    background: #56a615;
-    color: #FFF;
-    width: 600px;
-    margin: 0 auto;
+	font-size: 1.3em;
+	border-radius: 4px;
+	background: #500126;
+	color: #FFF;
+	width: 600px;
+	margin: 0 auto;
+	border: 2px solid #FFF;
 }
 
 .prompt-container p {
@@ -118,6 +166,14 @@ section.active {
 
 .prompt-text img {
 	max-width: 150px;
+}
+
+.buttons {
+	padding: 40px 0;
+}
+
+#results {
+	margin: 20px auto;
 }
 
 #results img {
@@ -133,7 +189,14 @@ section.active {
 	background: #16C60C;
 }
 
+#results tr, #results td {
+	margin: 0;
+	padding: 4px 8px;
+}
+
 #results tr:first-child, .results tr:first-child td {
-	background: #000 !important;
+	background: #500126 !important;
 	color: #FFF !important;
+	font-size: 1.3em;
+	text-transform: uppercase;
 }

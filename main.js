@@ -30,11 +30,38 @@ let enterButton = document.querySelector("#enter");
 let dummyButton = document.querySelector("#dummy-btn");
 let similarityElement = document.querySelector("#similarity");
 let correctAnswers = 0;
+let keyboardSounds = [
+	"key_a.wav",
+	"key_a2.wav",
+	"key_e.wav",
+	"key_e2.wav",
+	"key_enter.wav",
+	"key_enter2.wav",
+	"key_l.wav",
+	"key_l2.wav",
+	"key_r.wav",
+	"key_r2.wav",
+	"key_s.wav",
+	"key_s2.wav",
+	"key_t.wav",
+	"key_t2.wav",
+	"key_tap.wav",
+];
 
-// TODO klahvide sound effect Stas pidi otsima
-// TODO klahvide sound effect Martin pidi otsima
+let keywordSounds = [
+	"keyword1.mp3",
+	"keyword2.mp3",
+	"keyword3.mp3",
+	"keyword4.mp3",
+];
 
 // TODO console.log cleanup when the project is done
+
+function PlaySound(soundFileName) {
+	var audio = new Audio("sounds/"+soundFileName);
+    audio.type = 'audio/wav';
+	audio.play();
+}
 
 function InitKeyboard() {
 	let keyboardContainer = document.querySelector(".keyboard-container");
@@ -112,6 +139,7 @@ function StartGame() {
 	SetCurrentPromptLabel();
 	SetMaxPromptLabel();
 	summaryTable.innerHTML = "";
+	PlaySound(GetRandomKeywordSound());
 	
 	console.log("GAME STARTED");
 	console.log("PROMPTS: ", activePrompts);
@@ -204,6 +232,7 @@ function InsertKeyword(event) {
 		return;
 	}
 	
+	PlaySound(GetRandomKeywordSound());
 	SetToAnswers(keywordValue);
 	keywordElementInput.value = "";
 	SetNewToActivePrompt();
@@ -221,9 +250,24 @@ function GetKeyWithLetter(letter) {
 	return document.querySelector("#letter-"+letter);
 }
 
+function GetRandomKeyboardSound() {
+	return keyboardSounds[getRandomArbitrary(0, keyboardSounds.length)];
+}
+
+function GetRandomKeywordSound() {
+	return keywordSounds[getRandomArbitrary(0, keywordSounds.length)];
+}
+
+function getRandomArbitrary(min, max) {
+	let rand = Math.random() * (max - min) + min;
+	console.log("RANDOM", parseInt(rand.toFixed(0)));
+    return parseInt(rand.toFixed(0));
+}
+
 function KeyPressed(letter) {
 	console.log("KEY PRESSED ["+letter+"]");
 	HideError();
+	PlaySound(GetRandomKeyboardSound());
 	
 	let buttonElement = GetKeyWithLetter(letter);
 	if(buttonElement !== null && buttonElement !== undefined) {

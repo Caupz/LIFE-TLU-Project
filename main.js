@@ -1,3 +1,6 @@
+// TODO youtube compactible
+// TODO console.log cleanup when the project is done
+
 let keyboard = [
 	["Q","W","E","R","T","Y","U","I","O","P"],
 	["A","S","D","F","G","H","J","K","L",],
@@ -12,11 +15,26 @@ let promptTexts = [
 	{id:4, question:"Some text about case studies", keyword:"case study"},
 	{id:5, question:"Some text about observations", keyword:"observation"},
 	{id:6, question:"https://avatars1.githubusercontent.com/u/13436812?s=460&v=4", keyword:"caupo-profile"},
+	{id:7, question:"Observing", keyword:"observing"},
+	{id:8, question:"quizis", keyword:"quizis"},
+	{id:9, question:"surveys", keyword:"surveys"},
+	{id:10, question:"experiments", keyword:"experiments"},
+	{id:11, question:"interviews", keyword:"interviews"},
+	{id:12, question:"case studies", keyword:"case studies"},
+	{id:13, question:"images", keyword:"images"},
+	{id:14, question:"south park", keyword:"south park"},
+	{id:15, question:"code monkeys are the best monkeys", keyword:"codemonkey"},
+	{id:16, question:"Counter Strike", keyword:"CSGO"},
+	{id:17, question:"i dont event know what to put here", keyword:"dunno"},
+	{id:18, question:"bananas", keyword:"banana"},
 ];
-let promptsInserted = 0;
+let tempPrompts = promptTexts;
+let promptsInserted;
 let activePrompts = [];
 let insertedKeywords = [];
 let maxPrompts = 5;
+let maxLevels = 3;
+let currentLevel = 1;
 let activePrompt = null;
 let activeSection = "main-menu";
 let keywordElementInput = document.querySelector("#keyword");
@@ -29,6 +47,7 @@ let errorContainer = document.querySelector("#error-notifier");
 let enterButton = document.querySelector("#enter");
 let dummyButton = document.querySelector("#dummy-btn");
 let similarityElement = document.querySelector("#similarity");
+let levelElement = document.querySelector("#level-nr");
 let correctAnswers = 0;
 let keyboardSounds = [
 	"key_a.wav",
@@ -54,8 +73,6 @@ let keywordSounds = [
 	"keyword3.mp3",
 	"keyword4.mp3",
 ];
-
-// TODO console.log cleanup when the project is done
 
 function PlaySound(soundFileName) {
 	var audio = new Audio("sounds/"+soundFileName);
@@ -113,32 +130,72 @@ function ShowSection(sectionName) {
 }
 
 function GetRandomItemsFrom(arr, howManyItems) {
-    var result = new Array(howManyItems),
-        len = arr.length,
-        taken = new Array(len);
-    if (howManyItems > len)
-        throw new RangeError("getRandom: more elements taken than available");
-    while (howManyItems--) {
-        var x = Math.floor(Math.random() * len);
-        result[howManyItems] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
-    }
-    return result;
+	let fullArrayWithLevels = [];
+	let taken = new Array(howManyItems * maxLevels);
+	
+	for(let i = 0; i < maxLevels; i++) {
+		let inOneLevel = howManyItems;
+		console.log(i);
+		var result = new Array(inOneLevel),
+        len = arr.length;
+		if (inOneLevel > len)
+			throw new RangeError("getRandom: more elements taken than available");
+		while (inOneLevel--) {
+			var x = Math.floor(Math.random() * len);
+			
+			if(!IsItemAlreadyInArray(arr[x].id, fullArrayWithLevels, result)) {
+				result[inOneLevel] = arr[x];
+			} else {
+				inOneLevel++; // NOTE(Caupo 13.04.2020) Assign the cycle to repeate because it didn't found untaken array index x.
+			}
+		}
+		fullArrayWithLevels[i] = result;
+	}
+    
+    return fullArrayWithLevels;
+}
+
+function IsItemAlreadyInArray(findId, fullArrayWithLevels, result) {
+	for(let i = 0; i < maxLevels; i++) {
+		if(fullArrayWithLevels[i] === undefined) {
+			continue;
+		}
+		
+		for(let x = 0; x < maxLevels; x++) {
+			if(fullArrayWithLevels[i][x].id == findId) {
+				return true;
+			}
+		}
+	}
+	
+	for(let i = 0; i < result.length; i++) {
+		if(result[i] === undefined) {
+			continue;
+		}
+		if(result[i].id == findId) {
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 function StartGame() {
+	tempPrompts = promptTexts;
 	activePrompts = [];
 	insertedKeywords = [];
 	promptsInserted = -1;
 	correctAnswers = 0;
+	currentLevel = 1;
 	keywordElementInput.value = "";
-	activePrompts = GetRandomItemsFrom(promptTexts, 5);
+	activePrompts = GetRandomItemsFrom(tempPrompts, 5);
 	SetNewToActivePrompt();
 	console.log(activePrompt);
 	SetActiveTextToPrompt();
 	SetCurrentPromptLabel();
 	SetMaxPromptLabel();
 	summaryTable.innerHTML = "";
+	UpdateLevelLabel();
 	PlaySound(GetRandomKeywordSound());
 	
 	console.log("GAME STARTED");
@@ -185,7 +242,8 @@ function EnableErrors() {
 
 function SetNewToActivePrompt() {
 	promptsInserted++;
-	activePrompt = activePrompts[promptsInserted];
+	console.log("SetNewToActivePrompt", currentLevel, promptsInserted);
+	activePrompt = activePrompts[(currentLevel-1)][promptsInserted];
 	SetCurrentPromptLabel();
 }
 
@@ -235,15 +293,28 @@ function InsertKeyword(event) {
 	PlaySound(GetRandomKeywordSound());
 	SetToAnswers(keywordValue);
 	keywordElementInput.value = "";
-	SetNewToActivePrompt();
 	
-	if(promptsInserted >= maxPrompts) {
-		ShowSection("summary");
-		return;
+	if((promptsInserted + 1) >= maxPrompts) {
+		if(currentLevel >= maxLevels) {
+			ShowSection("summary");
+			return;
+		}
+		
+		console.log("currenLavel 1 ", currentLevel);
+		currentLevel++;
+		console.log("currenLavel 2 ", currentLevel);
+		promptsInserted = -1;
+		UpdateLevelLabel();
 	}
+	console.log("curentLvl, maxPrompts, promptsInserted ", currentLevel, maxPrompts, promptsInserted);
 	
+	SetNewToActivePrompt();
 	SetActiveTextToPrompt();
 	SetCurrentPromptLabel();
+}
+
+function UpdateLevelLabel() {
+	levelElement.innerText = currentLevel;
 }
 
 function GetKeyWithLetter(letter) {
@@ -260,12 +331,12 @@ function GetRandomKeywordSound() {
 
 function getRandomArbitrary(min, max) {
 	let rand = Math.random() * (max - min) + min;
-	console.log("RANDOM", parseInt(rand.toFixed(0)));
+	//console.log("RANDOM", parseInt(rand.toFixed(0)));
     return parseInt(rand.toFixed(0));
 }
 
 function KeyPressed(letter) {
-	console.log("KEY PRESSED ["+letter+"]");
+	//console.log("KEY PRESSED ["+letter+"]");
 	HideError();
 	PlaySound(GetRandomKeyboardSound());
 	
@@ -301,8 +372,16 @@ function ShowSummary() {
 	console.log("Insrted keyword data: ", insertedKeywords);
 	
 	AddRowToSummary("Your answer", "Prompt text", "Computer answer");
+	let promptCount = 0;
+	let levelCount = 0;
 	
 	for(let i = 0, insertedKeyword; insertedKeyword = insertedKeywords[i]; i++) {
+		if(promptCount % maxPrompts == 0) {
+			levelCount++;
+			AddRowToSummary("", "LEVEL "+levelCount, "");
+		}
+		promptCount++;
+		
 		let thisPrompt = GetPromptById(insertedKeyword.id);
 		console.log("ShowSummary", thisPrompt, thisPrompt.question);
 		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword);
@@ -327,7 +406,9 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
 		promptTd.innerText = promptText;
 	}
 	
-	if(yourAnswer.toLowerCase() === computerAnswer.toLowerCase()) {
+	if(yourAnswer == "" && computerAnswer == "") {
+		row.classList.add("level");
+	} else if(yourAnswer.toLowerCase() === computerAnswer.toLowerCase()) {
 		row.classList.add("correct");
 		correctAnswers++;
 	}
@@ -346,7 +427,8 @@ function DeleteLastCharOfInput() {
 }
 
 function CalculateSimilarities() {
-	return correctAnswers/maxPrompts*100;
+	let similarity = correctAnswers/(maxPrompts * maxLevels)*100;
+	return similarity.toFixed(2);
 }
 
 document.body.onkeyup = function(e){
@@ -371,7 +453,7 @@ document.onkeypress = function (e) {
 	
     e = e || window.event;
 	
-	console.log("keycode", e.keyCode);
+	//console.log("keycode", e.keyCode);
 	
 	switch(e.keyCode) {
 		case 81:case 113: KeyPressed("Q"); break;

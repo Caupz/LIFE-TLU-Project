@@ -189,6 +189,10 @@ section.active {
 	background: #16C60C;
 }
 
+#results tr.level {
+	background: #333;
+}
+
 #results tr, #results td {
 	margin: 0;
 	padding: 4px 8px;

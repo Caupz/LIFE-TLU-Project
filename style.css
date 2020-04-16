@@ -203,6 +203,16 @@ section.active {
 	padding: 4px 8px;
 }
 
+#results td:nth-child(2) {
+	max-width: 250px;
+	width: 250px;
+}
+
+#results iframe {
+	width: 100%;
+	height: auto;
+}
+
 #results tr:first-child, .results tr:first-child td {
 	background: #500126 !important;
 	color: #FFF !important;

@@ -27,6 +27,8 @@ let promptTexts = [
 	{id:16, question:"Counter Strike", keyword:"CSGO"},
 	{id:17, question:"i dont event know what to put here", keyword:"dunno"},
 	{id:18, question:"bananas", keyword:"banana"},
+	{id:19, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/lJIrF4YjHfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:["youtube", "embed", "tutorial"]},
+	{id:20, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:"rick"},
 ];
 let tempPrompts = promptTexts;
 let promptsInserted;
@@ -218,7 +220,7 @@ function GetImageElFromLink(linkUrl) {
 }
 
 function IsQuestionImage(question) {
-	return (question.includes("http://") || question.includes("https://"));
+	return (question.startsWith("http://") || question.startsWith("https://"));
 }
 
 function SetActiveTextToPrompt() {
@@ -231,7 +233,7 @@ function SetActiveTextToPrompt() {
 		return;
 	}
 	
-	promptElement.innerText = activePrompt.question;
+	promptElement.innerHTML = activePrompt.question;
 	errorCanBeShown = false;
 	setTimeout(EnableErrors, 100);
 }
@@ -457,7 +459,7 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
 		let imageEl = GetImageElFromLink(promptText);
 		promptTd.appendChild(imageEl);
 	} else {
-		promptTd.innerText = promptText;
+		promptTd.innerHTML = promptText;
 	}
 	
 	let urAnswer = yourAnswer.toLowerCase();

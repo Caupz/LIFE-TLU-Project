@@ -8,9 +8,9 @@ let keyboard = [
 	["_",],
 ];
 let promptTexts = [
-	{id:0, question:"Some text about quizis", keyword:"quiz"},
-	{id:1, question:"Some text about surveys", keyword:"survey"},
-	{id:2, question:"Some text about experiments", keyword:"experiment"},
+	{id:0, question:"Some text about quizis", keyword:["quiz", "quizes", "questionaries"]},
+	{id:1, question:"Some text about surveys", keyword:["survey", "surveys"]},
+	{id:2, question:"Some text about experiments", keyword:["experiment", "exp"]},
 	{id:3, question:"Some text about interviews", keyword:"interview"},
 	{id:4, question:"Some text about case studies", keyword:"case study"},
 	{id:5, question:"Some text about observations", keyword:"observation"},
@@ -390,6 +390,60 @@ function ShowSummary() {
 	similarity.innerHTML = "Similary between you and computer:<br> <strong>"+CalculateSimilarities()+"%</strong>";
 }
 
+function GetComputerAnswerStr(computerAnswer) {
+	let compAnswerLabel = "";
+	
+	if(Array.isArray(computerAnswer)) {
+		for(let i = 0, cAnswer; cAnswer = computerAnswer[i]; i++) {
+			compAnswerLabel += cAnswer.toUpperCase()+",";
+		}
+		compAnswerLabel = compAnswerLabel.substring(0, compAnswerLabel.length - 1);
+	} else {
+		compAnswerLabel = computerAnswer.toUpperCase();
+	}
+	
+	return compAnswerLabel;
+}
+
+function CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer) {
+	let urAnswer = yourAnswer.toLowerCase();
+	let correctness = 0;
+	
+	if(Array.isArray(computerAnswer)) {
+		let tempCorrectness = 0;
+		let tempCorrect = 0;
+		
+		for(let i = 0, cAnswer; cAnswer = computerAnswer[i]; i++) {
+			tempCorrect = CompareAnswers(urAnswer, cAnswer);
+			
+			if(tempCorrect > tempCorrectness) {
+				tempCorrectness = tempCorrect;
+			}
+			
+			if(tempCorrectness == 1) {
+				break;
+			}
+		}
+		
+		correctness += tempCorrectness;
+	} else {
+		correctness += CompareAnswers(urAnswer, computerAnswer);
+	}
+	
+	return correctness;
+}
+
+function CompareAnswers(yourAnswer, computerAnswer) {
+	let compAnswer = computerAnswer.toLowerCase();
+	
+	if(yourAnswer === compAnswer) {
+		return 1;
+	} else if(yourAnswer.includes(compAnswer) || compAnswer.includes(yourAnswer)) {
+		return 0.5;
+	}
+	return 0;
+}
+
 function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
 	let row = document.createElement("tr");
 	let yourTd = document.createElement("td");
@@ -397,7 +451,7 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
 	let computerTd = document.createElement("td");
 	
 	yourTd.innerText = yourAnswer.toUpperCase();
-	computerTd.innerText = computerAnswer.toUpperCase();
+	computerTd.innerText = GetComputerAnswerStr(computerAnswer);
 	
 	if(IsQuestionImage(promptText)) {
 		let imageEl = GetImageElFromLink(promptText);
@@ -406,11 +460,17 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
 		promptTd.innerText = promptText;
 	}
 	
+	let urAnswer = yourAnswer.toLowerCase();
+	let answerCorrectness = CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
+	
 	if(yourAnswer == "" && computerAnswer == "") {
 		row.classList.add("level");
-	} else if(yourAnswer.toLowerCase() === computerAnswer.toLowerCase()) {
+	} else if(answerCorrectness === 1) {
 		row.classList.add("correct");
-		correctAnswers++;
+		correctAnswers += CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
+	} else if(answerCorrectness === 0.5) { // todo siia gettimine kui correct oli 1 puhul?
+		row.classList.add("half-correct");
+		correctAnswers += CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
 	}
 	
 	row.appendChild(yourTd);
@@ -427,7 +487,8 @@ function DeleteLastCharOfInput() {
 }
 
 function CalculateSimilarities() {
-	let similarity = correctAnswers/(maxPrompts * maxLevels)*100;
+	console.log("CalculateSimilarities: correctAnswers", correctAnswers, "maxPrompts", maxPrompts, "maxLevels", maxLevels, "(maxPrompts * maxLevels)", (maxPrompts * maxLevels), "(correctAnswers/(maxPrompts * maxLevels))", (correctAnswers/(maxPrompts * maxLevels)));
+	let similarity = (correctAnswers/(maxPrompts * maxLevels)) * 100;
 	return similarity.toFixed(2);
 }
 

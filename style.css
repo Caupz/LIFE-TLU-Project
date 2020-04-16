@@ -8,7 +8,7 @@ body {
 	margin: 0 auto;
     font-family: Verdana;
 	background-color: #9c0a26;
-	background: linear-gradient(10deg, #4a0026 0%, #9c0a26 50%, #fd4300 100%);
+	background: linear-gradient(10deg, #4a0026 0%, #380714 50%, #222 100%);
 }
 
 button {
@@ -126,7 +126,8 @@ section.active {
 }
 
 .letter.active {
-	background: #bb153b;
+	background: #fff;
+	color: #500126;
 	transition: 0.05s ease;
 	box-shadow: none;
 }
@@ -187,6 +188,10 @@ section.active {
 
 #results tr.correct {
 	background: #16C60C;
+}
+
+#results tr.half-correct {
+	background: #f48024;
 }
 
 #results tr.level {

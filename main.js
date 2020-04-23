@@ -1,4 +1,5 @@
 // TODO console.log cleanup when the project is done
+// TODO speaker button muted toggle
 
 let keyboard = [
 	["Q","W","E","R","T","Y","U","I","O","P"],
@@ -50,6 +51,7 @@ let dummyButton = document.querySelector("#dummy-btn");
 let similarityElement = document.querySelector("#similarity");
 let levelElement = document.querySelector("#level-nr");
 let correctAnswers = 0;
+let soundMuted = false;
 let keyboardSounds = [
 	"key_a.wav",
 	"key_a2.wav",
@@ -76,6 +78,9 @@ let keywordSounds = [
 ];
 
 function PlaySound(soundFileName) {
+	if(soundMuted) {
+		return;
+	}
 	var audio = new Audio("sounds/"+soundFileName);
     audio.type = 'audio/wav';
 	audio.play();
@@ -130,28 +135,28 @@ function ShowSection(sectionName) {
 	}
 }
 
-function GetRandomItemsFrom(arr, howManyItems) {
+function GetRandomItemsFrom(allPromptArr, howManyItems) {
 	let fullArrayWithLevels = [];
 	let taken = new Array(howManyItems * maxLevels);
+	let tempPromptArr = allPromptArr.slice();
 	
 	for(let i = 0; i < maxLevels; i++) {
 		let inOneLevel = howManyItems;
 		console.log(i);
 		var result = new Array(inOneLevel),
-        len = arr.length;
+        len = tempPromptArr.length;
 		if (inOneLevel > len)
 			throw new RangeError("getRandom: more elements taken than available");
+
 		while (inOneLevel--) {
 			var x = Math.floor(Math.random() * len);
-			
-			if(!IsItemAlreadyInArray(arr[x].id, fullArrayWithLevels, result)) {
-				result[inOneLevel] = arr[x];
-			} else {
-				inOneLevel++; // NOTE(Caupo 13.04.2020) Assign the cycle to repeate because it didn't found untaken array index x.
-			}
+			result[inOneLevel] = tempPromptArr.splice(x, 1)[0];
+			console.log("GetRandomItemsFrom", result[inOneLevel]);
+			len--;
 		}
 		fullArrayWithLevels[i] = result;
 	}
+	console.log("fullArrayWithLevels", fullArrayWithLevels);
     
     return fullArrayWithLevels;
 }

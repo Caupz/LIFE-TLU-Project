@@ -1,4 +1,3 @@
-// TODO youtube compactible
 // TODO console.log cleanup when the project is done
 
 let keyboard = [
@@ -8,13 +7,13 @@ let keyboard = [
 	["_",],
 ];
 let promptTexts = [
-	{id:0, question:"Some text about quizis", keyword:["quiz", "quizes", "questionaries"]},
-	{id:1, question:"Some text about surveys", keyword:["survey", "surveys"]},
-	{id:2, question:"Some text about experiments", keyword:["experiment", "exp"]},
-	{id:3, question:"Some text about interviews", keyword:"interview"},
-	{id:4, question:"Some text about case studies", keyword:"case study"},
-	{id:5, question:"Some text about observations", keyword:"observation"},
-	{id:6, question:"https://avatars1.githubusercontent.com/u/13436812?s=460&v=4", keyword:"caupo-profile"},
+	{id:0, question:"Some text about quizis", keyword:["quiz", "quizes", "questionaries"], explanation: "here will be some additional info why computer answer is correct"},
+	{id:1, question:"Some text about surveys", keyword:["survey", "surveys"], explanation: "here will be some additional info why computer answer is correct"},
+	{id:2, question:"Some text about experiments", keyword:["experiment", "exp"], explanation: "here will be some additional info why computer answer is correct"},
+	{id:3, question:"Some text about interviews", keyword:"interview", explanation: "here will be some additional info why computer answer is correct"},
+	{id:4, question:"Some text about case studies", keyword:"case study", explanation: "here will be some additional info why computer answer is correct"},
+	{id:5, question:"Some text about observations", keyword:"observation", explanation: "here will be some additional info why computer answer is correct"},
+	{id:6, question:"https://avatars1.githubusercontent.com/u/13436812?s=460&v=4", keyword:"caupo-profile", explanation: "here will be some additional info why computer answer is correct"},
 	{id:7, question:"Observing", keyword:"observing"},
 	{id:8, question:"quizis", keyword:"quizis"},
 	{id:9, question:"surveys", keyword:"surveys"},
@@ -373,20 +372,20 @@ function ShowSummary() {
 	console.log("Inserted keywords: "+promptsInserted);
 	console.log("Insrted keyword data: ", insertedKeywords);
 	
-	AddRowToSummary("Your answer", "Prompt text", "Computer answer");
+	AddRowToSummary("Your answer", "Prompt text", "Computer answer", undefined);
 	let promptCount = 0;
 	let levelCount = 0;
 	
 	for(let i = 0, insertedKeyword; insertedKeyword = insertedKeywords[i]; i++) {
 		if(promptCount % maxPrompts == 0) {
 			levelCount++;
-			AddRowToSummary("", "LEVEL "+levelCount, "");
+			AddRowToSummary("", "LEVEL "+levelCount, "", undefined);
 		}
 		promptCount++;
 		
 		let thisPrompt = GetPromptById(insertedKeyword.id);
 		console.log("ShowSummary", thisPrompt, thisPrompt.question);
-		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword);
+		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword, thisPrompt.explanation);
 	}
 	
 	similarity.innerHTML = "Similary between you and computer:<br> <strong>"+CalculateSimilarities()+"%</strong>";
@@ -446,14 +445,24 @@ function CompareAnswers(yourAnswer, computerAnswer) {
 	return 0;
 }
 
-function AddRowToSummary(yourAnswer, promptText, computerAnswer) {
+function AddRowToSummary(yourAnswer, promptText, computerAnswer, exaplanationStr) {
 	let row = document.createElement("tr");
 	let yourTd = document.createElement("td");
 	let promptTd = document.createElement("td");
 	let computerTd = document.createElement("td");
 	
 	yourTd.innerText = yourAnswer.toUpperCase();
-	computerTd.innerText = GetComputerAnswerStr(computerAnswer);
+
+	if(exaplanationStr !== undefined) {
+		let paraf = document.createElement("p");
+		paraf.classList.add("w3-tooltip");
+		paraf.innerHTML = GetComputerAnswerStr(computerAnswer) +
+			'<span style="position:absolute;left:0;bottom:18px" class="w3-text w3-tag">'+exaplanationStr+'</span>' +
+			'<span class="explanation">i</span>';
+		computerTd.appendChild(paraf);
+	} else {
+		computerTd.innerText = GetComputerAnswerStr(computerAnswer);
+	}
 	
 	if(IsQuestionImage(promptText)) {
 		let imageEl = GetImageElFromLink(promptText);

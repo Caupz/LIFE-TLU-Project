@@ -94,7 +94,7 @@ function InitKeyboard() {
 			let btnElement = document.createElement("button");
 			btnElement.id = "letter-"+letter;
 			btnElement.innerText = letter;
-			btnElement.onclick = "KeyPressed('"+letter+"')";
+			btnElement.addEventListener("click", function() { console.log("KEY PRESS "+letter); KeyPressed(letter) });
 			btnElement.className = "letter";
 			keyboardContainer.appendChild(btnElement);
 		}

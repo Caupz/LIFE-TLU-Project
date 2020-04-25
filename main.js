@@ -85,6 +85,20 @@ function PlaySound(soundFileName) {
 	audio.play();
 }
 
+let speakerBtn = document.querySelector(".speaker");
+
+function ToggleAudio() {
+	soundMuted = !soundMuted;
+
+	if(soundMuted) {
+        speakerBtn.src = "speaker-muted.svg";
+        speakerBtn.style = "transform: scale(1.0)";
+	} else {
+        speakerBtn.src = "speaker-muted.svg"; // TODO ICON
+        speakerBtn.style = "transform: scale(1.1)";
+	}
+}
+
 function InitKeyboard() {
 	let keyboardContainer = document.querySelector(".keyboard-container");
 	
@@ -93,7 +107,7 @@ function InitKeyboard() {
 			let btnElement = document.createElement("button");
 			btnElement.id = "letter-"+letter;
 			btnElement.innerText = letter;
-			btnElement.addEventListener("click", function() { console.log("KEY PRESS "+letter); KeyPressed(letter) });
+			btnElement.addEventListener("click", function() { console.log("KEY PRESS "+letter); KeyPressed(letter); });
 			btnElement.className = "letter";
 			keyboardContainer.appendChild(btnElement);
 		}
@@ -352,10 +366,12 @@ function KeyPressed(letter) {
 	} else {
 		console.log("ERROR: Button element undefined or null (1)");
 	}
-	
-	if(letter === "_") {
-		keywordElementInput.value += " ";	
-	} else {
+
+    if(letter === "_") {
+        keywordElementInput.value += " ";
+    } else if(letter === "backspace") {
+        keywordElementInput.value = keywordElementInput.value.substring(0, keywordElementInput.value.length - 1);
+    } else {
 		keywordElementInput.value = keywordElementInput.value+letter.toUpperCase();	
 	}
 	dummyButton.focus(); // NOTE(Caupo 26.03.2020): Fixes case where player clickes on button and then tries to press enter. Without this row the same letter is clicked.

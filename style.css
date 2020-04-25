@@ -107,6 +107,28 @@ section.active {
 	text-align: center;
 }
 
+#letter-backspace {
+	width: auto !important;
+	position: absolute;
+	right: 0;
+}
+
+.keyboard-container > div {
+	padding: 0 11vw;
+	position: relative;
+	height: 55px;
+	margin: 0 auto;
+	width: 10vw;
+}
+
+.speaker {
+	transition: 0.1s ease;
+	border: none;
+	background: transparent;
+	position: absolute;
+	left: 0;
+}
+
 #dummy-btn {
 	visibility: hidden;
 }

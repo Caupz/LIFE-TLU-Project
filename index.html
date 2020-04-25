@@ -58,7 +58,14 @@
 				<img src="./images/submit-btn.svg" alt="Bureau Submit Button"/>
 			</button>
 		</div>
-		<div class="keyboard-container"></div>
+		<div class="keyboard-container">
+			<div>
+				<button class="speaker" onclick='ToggleAudio()' style="transform: scale(1.1);">
+					<img src="./images/speaker-muted.svg" alt="Speaker toggle button" />
+				</button>
+				<button class="letter" id="letter-backspace" onclick='KeyPressed("backspace");'>← Backspace</button>
+			</div>
+		</div>
 	</section>
 
 	<section id="summary">

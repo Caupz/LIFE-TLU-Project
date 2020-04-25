@@ -67,7 +67,6 @@ let keyboardSounds = [
 	"key_s2.wav",
 	"key_t.wav",
 	"key_t2.wav",
-	"key_tap.wav",
 ];
 
 let keywordSounds = [

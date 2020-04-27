@@ -416,7 +416,7 @@ function GetComputerAnswerStr(computerAnswer) {
 	
 	if(Array.isArray(computerAnswer)) {
 		for(let i = 0, cAnswer; cAnswer = computerAnswer[i]; i++) {
-			compAnswerLabel += cAnswer.toUpperCase()+",";
+			compAnswerLabel += cAnswer.toUpperCase()+", ";
 		}
 		compAnswerLabel = compAnswerLabel.substring(0, compAnswerLabel.length - 1);
 	} else {
@@ -470,25 +470,29 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer, exaplanationStr
 	let yourTd = document.createElement("td");
 	let promptTd = document.createElement("td");
 	let computerTd = document.createElement("td");
-	
-	yourTd.innerText = yourAnswer.toUpperCase();
+
+	let yourTdP = document.createElement("p");
+	yourTdP.innerText = yourAnswer.toUpperCase();
+	yourTd.appendChild(yourTdP);
+
+	let paraf = document.createElement("p");
+	paraf.innerHTML = GetComputerAnswerStr(computerAnswer);
 
 	if(exaplanationStr !== undefined) {
-		let paraf = document.createElement("p");
 		paraf.classList.add("w3-tooltip");
-		paraf.innerHTML = GetComputerAnswerStr(computerAnswer) +
-			'<span style="position:absolute;left:0;bottom:18px" class="w3-text w3-tag">'+exaplanationStr+'</span>' +
+		paraf.innerHTML += '<span style="position:absolute;left:0;bottom:18px" class="w3-text w3-tag">'+exaplanationStr+'</span>' +
 			'<span class="explanation">i</span>';
-		computerTd.appendChild(paraf);
-	} else {
-		computerTd.innerText = GetComputerAnswerStr(computerAnswer);
 	}
+
+	computerTd.appendChild(paraf);
 	
 	if(IsQuestionImage(promptText)) {
 		let imageEl = GetImageElFromLink(promptText);
 		promptTd.appendChild(imageEl);
 	} else {
-		promptTd.innerHTML = promptText;
+		let promptParaf = document.createElement("p");
+		promptParaf.innerHTML = promptText;
+		promptTd.appendChild(promptParaf);
 	}
 	
 	let urAnswer = yourAnswer.toLowerCase();

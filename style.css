@@ -7,6 +7,7 @@ body {
 	background: url('./images/background.svg');
 	background-size: cover;
 	background-attachment: fixed;
+	background-color: #2f253f;
 }
 
 @font-face{
@@ -369,6 +370,42 @@ section.active {
 
 #similarity {
 	font-size: 1.7em;
+}
+
+.footer {
+	background: #3e2d51;
+	margin-bottom: -30px;
+}
+
+.footer > div {
+	width: 1024px;
+	margin: 0 auto;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+.footer > div > div:first-child {
+	width: 25%;
+}
+
+.footer > div > div:last-child {
+	width: 74%;
+	vertical-align: top;
+}
+
+.footer h3 {
+	margin-top: 0;
+	font-family: BalooThambi2-Bold;
+	font-weight: 100;
+}
+
+strong {
+	font-family: BalooThambi2-Bold;
+	font-weight: 100;
+}
+
+.footer > div > div {
+	display: inline-block;
 }
 
 .w3-tooltip {position: relative;}

@@ -85,16 +85,16 @@ function PlaySound(soundFileName) {
 	audio.play();
 }
 
-let speakerBtn = document.querySelector(".speaker");
+let speakerBtn = document.querySelector(".speaker img");
 
 function ToggleAudio() {
 	soundMuted = !soundMuted;
 
 	if(soundMuted) {
-        speakerBtn.src = "speaker-muted.svg";
+        speakerBtn.src = "./images/speaker-muted.svg";
         speakerBtn.style = "transform: scale(1.0)";
 	} else {
-        speakerBtn.src = "speaker-muted.svg"; // TODO ICON
+        speakerBtn.src = "./images/speaker-unmuted.svg";
         speakerBtn.style = "transform: scale(1.1)";
 	}
 }

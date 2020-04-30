@@ -45,7 +45,7 @@ let promptTexts = [
 	},
 	{
 		id:7, 
-		question:"./images/prompts-pics/dataSet2.png", 
+		question:"./images/prompts-pics/dataset2.png", 
 		keyword:"dataset"
 	},
 	{
@@ -75,7 +75,7 @@ let promptTexts = [
 	},
 	{
 		id:13, 
-		question:"./images/prompts-pics/survey.png", 
+		question:"./images/prompts-pics/survey.png?v=2", 
 		keyword:"survey"
 	},
 	{

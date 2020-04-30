@@ -260,6 +260,9 @@ section.active {
 .prompt-text img {
 	max-width: 150px;
 }
+#prompt-text img {
+	max-width: 100%;
+}
 
 .buttons {
 	padding: 40px 0;

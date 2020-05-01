@@ -70,7 +70,7 @@ section.active {
 	display: block;
 }
 
-#main-menu {
+#main-menu, #introduction {
 	margin: 14vh auto;
 }
 
@@ -120,6 +120,12 @@ section.active {
 	width: auto !important;
 	position: absolute;
 	right: 0;
+}
+
+section#introduction h2{
+	font-family: BalooThambi2-Bold;
+	color: #FBDA19;
+	font-size: 2em;
 }
 
 .keyboard-container > div {

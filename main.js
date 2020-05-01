@@ -616,6 +616,9 @@ document.onkeypress = function (e) {
 	HideError();
 	
 	if(activeSection === "main-menu" && e.keyCode == 13) {
+		ShowSection("introduction");
+		return;
+	} else if(activeSection === "introduction" && e.keyCode == 13) {
 		ShowSection("gameplay");
 		return;
 	} else if(activeSection === "summary" && e.keyCode == 13) {

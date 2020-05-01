@@ -448,7 +448,7 @@ function KeyPressed(letter) {
     if(letter === "_") {
         keywordElementInput.value += " ";
     } else if(letter === "backspace") {
-        keywordElementInput.value = keywordElementInput.value.substring(0, keywordElementInput.value.length - 1);
+		DeleteLastCharOfInput();
     } else {
 		keywordElementInput.value = keywordElementInput.value+letter.toUpperCase();	
 	}
@@ -658,14 +658,14 @@ document.onkeypress = function (e) {
 		case 77:case 109: KeyPressed("M"); break;
 		case 32: KeyPressed("_"); break;
 		case 13: InsertKeyword(); break;
-		case 8: DeleteLastCharOfInput(); break;
+		case 8: KeyPressed("backspace"); break;
 	}
 };
 
 window.addEventListener('keydown',function(e) {
 	if(e.keyIdentifier=='U+0008'||e.keyIdentifier=='Backspace'||e.keyCode==8) {
 		e.preventDefault();
-		DeleteLastCharOfInput();
+		KeyPressed("backspace");
 		return false;
 	}
 	if(e.keyIdentifier=='Space'||e.keyCode==32) {

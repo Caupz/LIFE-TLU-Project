@@ -8,6 +8,83 @@ let keyboard = [
 	["_",],
 ];
 let promptTexts = [
+	{
+		id:0, 
+		question:"./images/prompts-pics/thematicAnalys.png", 
+		keyword:"thematic analys" 
+	},
+	{
+		id:1, 
+		question:"./images/prompts-pics/sample.png", 
+		keyword:"sample" 
+	},
+	{
+		id:2, 
+		question:"./images/prompts-pics/questionnaire-scale.jpg",
+		keyword:"questionnaire scale"
+	},
+	{
+		id:3, 
+		question:"./images/prompts-pics/interviewNotes.png", 
+		keyword:"interview notes"
+	},
+	{
+		id:4, 
+		question:"./images/prompts-pics/interview1.jpg", 
+		keyword:"interview"
+	},
+	{
+		id:5, 
+		question:"./images/prompts-pics/interview.jpeg", 
+		keyword:"interview"
+	},
+	{
+		id:6, 
+		question:"./images/prompts-pics/interview-notes.png", 
+		keyword:"interview notes"
+	},
+	{
+		id:7, 
+		question:"./images/prompts-pics/dataset2.png", 
+		keyword:"dataset"
+	},
+	{
+		id:8, 
+		question:"./images/prompts-pics/dataSet6.png", 
+		keyword:"dataset"
+	},
+	{
+		id:9, 
+		question:"./images/prompts-pics/dataSet5.jpg", 
+		keyword:"dataset"
+	},
+	{
+		id:10, 
+		question:"./images/prompts-pics/dataSet3.png", 
+		keyword:"dataset"
+	},
+	{
+		id:11, 
+		question:"./images/prompts-pics/dataSet1.jpg", 
+		keyword:"dataset"
+	},
+	{
+		id:12, 
+		question:"./images/prompts-pics/dataSet.jpg", 
+		keyword:"dataset"
+	},
+	{
+		id:13, 
+		question:"./images/prompts-pics/survey.png?v=2", 
+		keyword:"survey"
+	},
+	{
+		id:14, 
+		question:"./images/prompts-pics/interview.jpeg",
+		keyword:"interview"
+	}
+];
+/*[
 	{id:0, question:"Some text about quizis", keyword:["quiz", "quizes", "questionaries"], explanation: "here will be some additional info why computer answer is correct"},
 	{id:1, question:"Some text about surveys", keyword:["survey", "surveys"], explanation: "here will be some additional info why computer answer is correct"},
 	{id:2, question:"Some text about experiments", keyword:["experiment", "exp"], explanation: "here will be some additional info why computer answer is correct"},
@@ -29,7 +106,7 @@ let promptTexts = [
 	{id:18, question:"bananas", keyword:"banana"},
 	{id:19, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/lJIrF4YjHfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:["youtube", "embed", "tutorial"]},
 	{id:20, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:"rick"},
-];
+];*/
 let tempPrompts = promptTexts;
 let promptsInserted;
 let activePrompts = [];
@@ -237,7 +314,8 @@ function GetImageElFromLink(linkUrl) {
 }
 
 function IsQuestionImage(question) {
-	return (question.startsWith("http://") || question.startsWith("https://"));
+	return (question.startsWith("http://") || question.startsWith("https://")
+	 || question.startsWith("./images/"));
 }
 
 function SetActiveTextToPrompt() {
@@ -416,7 +494,7 @@ function GetComputerAnswerStr(computerAnswer) {
 	
 	if(Array.isArray(computerAnswer)) {
 		for(let i = 0, cAnswer; cAnswer = computerAnswer[i]; i++) {
-			compAnswerLabel += cAnswer.toUpperCase()+",";
+			compAnswerLabel += cAnswer.toUpperCase()+", ";
 		}
 		compAnswerLabel = compAnswerLabel.substring(0, compAnswerLabel.length - 1);
 	} else {
@@ -470,25 +548,29 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer, exaplanationStr
 	let yourTd = document.createElement("td");
 	let promptTd = document.createElement("td");
 	let computerTd = document.createElement("td");
-	
-	yourTd.innerText = yourAnswer.toUpperCase();
+
+	let yourTdP = document.createElement("p");
+	yourTdP.innerText = yourAnswer.toUpperCase();
+	yourTd.appendChild(yourTdP);
+
+	let paraf = document.createElement("p");
+	paraf.innerHTML = GetComputerAnswerStr(computerAnswer);
 
 	if(exaplanationStr !== undefined) {
-		let paraf = document.createElement("p");
 		paraf.classList.add("w3-tooltip");
-		paraf.innerHTML = GetComputerAnswerStr(computerAnswer) +
-			'<span style="position:absolute;left:0;bottom:18px" class="w3-text w3-tag">'+exaplanationStr+'</span>' +
+		paraf.innerHTML += '<span style="position:absolute;left:0;bottom:18px" class="w3-text w3-tag">'+exaplanationStr+'</span>' +
 			'<span class="explanation">i</span>';
-		computerTd.appendChild(paraf);
-	} else {
-		computerTd.innerText = GetComputerAnswerStr(computerAnswer);
 	}
+
+	computerTd.appendChild(paraf);
 	
 	if(IsQuestionImage(promptText)) {
 		let imageEl = GetImageElFromLink(promptText);
 		promptTd.appendChild(imageEl);
 	} else {
-		promptTd.innerHTML = promptText;
+		let promptParaf = document.createElement("p");
+		promptParaf.innerHTML = promptText;
+		promptTd.appendChild(promptParaf);
 	}
 	
 	let urAnswer = yourAnswer.toLowerCase();

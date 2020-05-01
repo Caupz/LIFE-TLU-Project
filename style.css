@@ -44,6 +44,14 @@ button {
 	cursor: pointer;
 }
 
+.hitsa {
+	width: auto;
+	background: #FFF;
+	margin: 0 auto;
+	height: auto;
+	max-width: 100%;
+}
+
 h1 {
 	margin-top: 0;
 	padding-top: 75px;
@@ -387,12 +395,17 @@ section.active {
 	padding-bottom: 40px;
 }
 
+.footer > div > div {
+	width: 50%;
+	vertical-align: top;
+}
+
 .footer > div > div:first-child {
 	width: 25%;
 }
 
 .footer > div > div:last-child {
-	width: 74%;
+	width: 24%;
 	vertical-align: top;
 }
 

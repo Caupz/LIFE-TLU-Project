@@ -187,6 +187,10 @@ section#introduction h2{
 	vertical-align: bottom;
 }
 
+#next-level {
+	margin-bottom: 30px;
+}
+
 #level-header, .yellow-heading {
 	margin-bottom: 0;
 	font-family: BalooThambi2-Bold;

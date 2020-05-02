@@ -11,32 +11,32 @@ let promptTexts = [
 	{
 		id:0, 
 		question:"./images/prompts-pics/thematicAnalys.png", 
-		keyword:"thematic analys" 
+		keyword:["thematic analys", "picture", "image"]
 	},
 	{
 		id:1, 
 		question:"./images/prompts-pics/sample.png", 
-		keyword:"sample" 
+		keyword:"data" 
 	},
 	{
 		id:2, 
 		question:"./images/prompts-pics/questionnaire-scale.jpg",
-		keyword:"questionnaire scale"
+		keyword:["questionnaire scale", "scale"]
 	},
 	{
 		id:3, 
 		question:"./images/prompts-pics/interviewNotes.png", 
-		keyword:"interview notes"
+		keyword:["interview notes", "interview"]
 	},
 	{
 		id:4, 
 		question:"./images/prompts-pics/interview1.jpg", 
-		keyword:"interview"
+		keyword:["interview", "recorder", "recording"]
 	},
 	{
 		id:5, 
 		question:"./images/prompts-pics/interview.jpeg", 
-		keyword:"interview"
+		keyword:"guidelines"
 	},
 	{
 		id:6, 
@@ -46,37 +46,37 @@ let promptTexts = [
 	{
 		id:7, 
 		question:"./images/prompts-pics/dataset2.png", 
-		keyword:"dataset"
+		keyword:"chart"
 	},
 	{
 		id:8, 
 		question:"./images/prompts-pics/dataSet6.png", 
-		keyword:"dataset"
+		keyword:["picture", "image"]
 	},
 	{
 		id:9, 
 		question:"./images/prompts-pics/dataSet5.jpg", 
-		keyword:"dataset"
+		keyword:"chart"
 	},
 	{
 		id:10, 
 		question:"./images/prompts-pics/dataSet3.png", 
-		keyword:"dataset"
+		keyword:["dataset", "correlation chart", "correlation"]
 	},
 	{
 		id:11, 
 		question:"./images/prompts-pics/dataSet1.jpg", 
-		keyword:"dataset"
+		keyword:["dataset", "correlation chart", "correlation"]
 	},
 	{
 		id:12, 
 		question:"./images/prompts-pics/dataSet.jpg", 
-		keyword:"dataset"
+		keyword:["picture", "image"]
 	},
 	{
 		id:13, 
 		question:"./images/prompts-pics/survey.png?v=2", 
-		keyword:"survey"
+		keyword:["survey", "questionnaire"]
 	},
 	{
 		id:14, 

@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "username";
-$password = "password";
-$dbName = "dbName";
+$username = "user";
+$password = "pass";
+$dbName = "db";
 
 // DB connection with credentials
 

@@ -139,6 +139,7 @@ let currentPromptElement = document.querySelector("#current-prompt");
 let maxPromptElement = document.querySelector("#max-prompt");
 let promptElement = document.querySelector("#prompt-text");
 let errorContainer = document.querySelector("#error-notifier");
+let highscoreTable = document.querySelector("#highscore-table");
 let enterButton = document.querySelector("#enter");
 let dummyButton = document.querySelector("#dummy-btn");
 let similarityElement = document.querySelector("#similarity");
@@ -227,6 +228,14 @@ function SetSectionActive(sectionName) {
 }
 
 function ShowSection(sectionName) {
+	let sections = GetAllSections();
+
+	for(let i = 0, section; section = sections[i]; i++) {
+		section.classList.remove("active");
+	}
+
+	SetSectionActive(sectionName);
+
 	if(sectionName == "highscore") {
 		let playerName = prompt("What is your name? We are asking for it because of the highscore table.");
 
@@ -246,6 +255,14 @@ function ShowSection(sectionName) {
 					if (this.readyState == 4 && this.status == 200) {
 						console.log("HIGHSCORE GET", this.responseText);
 						var playerScores = JSON.parse(this.responseText);
+						highscoreTable.innerHTML = "";
+
+						RenderHighscoreEntry({name:"Name", similarity: "similarity", created_at: "TIME"});
+						for(let p = 0; p < playerScores.length; p++) {
+							RenderHighscoreEntry(playerScores[p]);
+						}
+
+						SetSectionActive("highscore");
 						console.log("playerScores", playerScores);
 					}
 				};
@@ -258,19 +275,8 @@ function ShowSection(sectionName) {
 		};
 
 		request.send(formData);
-
-		// TODO küsi nime (finalSimilarity)
-		//  saada post ja kui post done, siis saadab ajaxipäringu, et get ja mis finaliga renderdab highscore
 		return;
 	}
-
-	let sections = GetAllSections();
-	
-	for(let i = 0, section; section = sections[i]; i++) {
-		section.classList.remove("active");
-	}
-	
-	SetSectionActive(sectionName);
 	
 	if(sectionName == "gameplay") {
 		if(currentLevel == 1) {
@@ -285,6 +291,27 @@ function ShowSection(sectionName) {
 	} else if(sectionName == "introduction") {
 		PlaySound(GetRandomKeywordSound());
 	}
+}
+
+function RenderHighscoreEntry(playerData) {
+	let trEl = document.createElement("tr");
+	let tdName = document.createElement("td");
+	let pEl = document.createElement("p");
+	pEl.innerText = playerData.name;
+	tdName.appendChild(pEl);
+	let tdSimilarity = document.createElement("td");
+	pEl = document.createElement("p");
+	pEl.innerText = playerData.similarity;
+	tdSimilarity.appendChild(pEl);
+	let tdCreatedAt = document.createElement("td");
+	pEl = document.createElement("p");
+	pEl.innerText = playerData.created_at;
+	tdCreatedAt.appendChild(pEl);
+	trEl.appendChild(tdName);
+	trEl.appendChild(tdSimilarity);
+	trEl.appendChild(tdCreatedAt);
+
+	highscoreTable.append(trEl);
 }
 
 function GetRandomItemsFrom(allPromptArr) {

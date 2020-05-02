@@ -129,11 +129,10 @@ section#introduction h2{
 }
 
 .keyboard-container > div {
-	padding: 0 11vw;
+	width: 614px;
 	position: relative;
 	height: 55px;
 	margin: 0 auto;
-	width: 10vw;
 }
 
 .speaker {
@@ -435,17 +434,44 @@ strong {
 .w3-tooltip:hover .w3-text {display:inline-block}
 .w3-tag{background-color:#000;color:#fff;padding-left:8px;padding-right:8px;text-align:center}
 
-@media only screen and (max-width: 1050px)  {
+#introduction p {
+	max-width: 600px;
+	margin: 20px auto;
+}
+
+@media only screen and (max-width: 1050px) {
 	.container, .footer > div {
 		width: 100%;
 	}
 }
-@media only screen and (max-width: 800px)  {
+@media only screen and (max-width: 800px) {
 	.footer > div > div {
 		display: block;
 		width: 100% !important;
 		margin: 0 auto;
 		text-align: center;
+	}
+}
+@media only screen and (max-width: 680px) {
+	.prompt-container {
+		padding: 30px;
+		width: 85%;
+	}
+	#keyword {
+		width: 60%;
+	}
+	.letter {
+		font-size: 1.2em;
+		width: auto;
+		height: auto;
+		font-weight: bold;
+	}
+	.keyboard-container > div {
+		width: 80%;
+	}
+	#results {
+		width: 100%;
+		padding: 0;
 	}
 }
 @media only screen and (max-width: 600px) {
@@ -458,9 +484,37 @@ strong {
 	#main-menu > div.description {
 		width: 100%;
 	}
+	#prompt-hint {
+		font-size: 1.2em;
+	}
 }
+
 @media only screen and (max-width: 500px) {
 	#main-menu > div.description {
 		font-size: 1.2em;
+	}
+	.letter {
+		font-size: 0.8em;
+	}
+	.speaker img {
+		height: 30px;
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	.keyboard-container br, .description br {
+		display: none;
+	}
+	#similarity {
+		font-size: 1.2em;
+	}
+	#results tr td p {
+		font-size: 0.7em;
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	#results tr td p {
+		font-size: 0.5em;
 	}
 }

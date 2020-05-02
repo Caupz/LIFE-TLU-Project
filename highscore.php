@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "user";
-$password = "pass";
-$dbName = "dbname";
+$username = "username";
+$password = "password";
+$dbName = "dbName";
 
 // DB connection with credentials
 
@@ -13,8 +13,8 @@ if ($db->connect_error) {
     die("Connection failed: " . $db->connect_error);
 }
 
-if(isset($_POST)) {
-    $sql = "INSERT INTO highscore (`name`, `similarity`) VALUES (:playerName, :similarity)";
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $sql = "INSERT INTO highscore (name, similarity) VALUES (?, ?)";
 
     if (!($statement = $db->prepare($sql))) {
         echo "Prepare failed: (" . $db->errno . ") " . $db->error;
@@ -22,15 +22,14 @@ if(isset($_POST)) {
         die;
     }
 
-    $statement->bindParam("playerName", $_POST["name"]);
-    $statement->bindParam("similarity", $_POST["similarity"]);
+    $statement->bind_param("sd", $_POST["name"], $_POST["similarity"]);
 
     if (!$statement->execute()) {
         echo "Execute failed: (" . $statement->errno . ") " . $statement->error;
     }
 
 } else {
-    $sql = "SELECT id, `name`, similarity, created_at FROM highscore";
+    $sql = "SELECT id, `name`, similarity, created_at FROM highscore ORDER BY similarity DESC";
     $result = $db->query($sql);
     $data = [];
 
@@ -39,7 +38,7 @@ if(isset($_POST)) {
             $data[] = ["name" => $row["name"], "similarity" => $row["similarity"], "created_at" => $row["created_at"]];
         }
     } else {
-        echo "0 results";
+        echo "NONE";
     }
 
     echo json_encode($data);

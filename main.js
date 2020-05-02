@@ -106,11 +106,14 @@ let promptTexts = [
 	{id:19, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/lJIrF4YjHfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:["youtube", "embed", "tutorial"]},
 	{id:20, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:"rick"},
 ];*/
+// DONE Section addida highschore
 
-// TODO DB connection
 // TODO Highscore table
+// 		Nupuvajutuste mappingut peale summaryt muuta et küsib prompti ja highschore ja highscorest main menusse
 //		Insert name (prompt), similarity percent, created_at
+//			Ajax query
 //		Show table
+//			Ajax query
 //		Back to main menu
 
 
@@ -120,6 +123,7 @@ let tempMaxPrompts;
 let maxLevels = 3;
 let levelInsertedKeyword = [];
 
+let finalSimilarity;
 let tempPrompts = promptTexts;
 let promptsInserted;
 let activePrompts = [];
@@ -223,6 +227,43 @@ function SetSectionActive(sectionName) {
 }
 
 function ShowSection(sectionName) {
+	if(sectionName == "highscore") {
+		let playerName = prompt("What is your name? We are asking for it because of the highscore table.");
+
+		let formData = new FormData();
+		formData.append("name", playerName);
+		formData.append("similarity", finalSimilarity);
+
+		let request = new XMLHttpRequest();
+		request.open("POST", "highscore.php");
+		request.onload = function(e) {
+			if (request.status == 200) {
+				console.log("SERVERI VASTUS", this.responseText);
+
+				let xmlhttp = new XMLHttpRequest();
+				console.log("HIGHSCORE STUFF");
+				xmlhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						console.log("HIGHSCORE GET", this.responseText);
+						var playerScores = JSON.parse(this.responseText);
+						console.log("playerScores", playerScores);
+					}
+				};
+				xmlhttp.open("GET", "highscore.php", true);
+				xmlhttp.send();
+
+			} else {
+				console.log("SERVERI ERROR", request.status);
+			}
+		};
+
+		request.send(formData);
+
+		// TODO küsi nime (finalSimilarity)
+		//  saada post ja kui post done, siis saadab ajaxipäringu, et get ja mis finaliga renderdab highscore
+		return;
+	}
+
 	let sections = GetAllSections();
 	
 	for(let i = 0, section; section = sections[i]; i++) {
@@ -507,7 +548,8 @@ function ShowSummary() {
 		}
 	}
 
-	similarityElement.innerHTML = "Similary between you and computer:<br> <strong>"+CalculateSimilarities()+"%</strong>";
+	finalSimilarity = CalculateSimilarities();
+	similarityElement.innerHTML = "Similary between you and computer:<br> <strong>"+finalSimilarity+"%</strong>";
 }
 
 function ShowLevelSummary() {
@@ -727,6 +769,9 @@ document.onkeypress = function (e) {
 		ShowSection("gameplay");
 		return;
 	} else if(activeSection === "summary" && e.keyCode == 13) {
+		ShowSection("highscore");
+		return;
+	} else if(activeSection === "highscore" && e.keyCode == 13) {
 		ShowSection("main-menu");
 		return;
 	} else if(activeSection !== "gameplay") {

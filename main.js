@@ -109,7 +109,7 @@ let promptTexts = [
 
 // TODO DB connection
 // TODO Highscore table
-//		Insert name (prompt)
+//		Insert name (prompt), similarity percent, created_at
 //		Show table
 //		Back to main menu
 

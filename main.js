@@ -1,5 +1,4 @@
 // TODO console.log cleanup when the project is done
-// TODO speaker button muted toggle
 
 let keyboard = [
 	["Q","W","E","R","T","Y","U","I","O","P"],
@@ -26,7 +25,7 @@ let promptTexts = [
 	{
 		id:3, 
 		question:"./images/prompts-pics/interviewNotes.png", 
-		keyword:["interview notes", "interview"]
+		keyword:["interview notes", "interview", "notes"]
 	},
 	{
 		id:4, 
@@ -81,7 +80,7 @@ let promptTexts = [
 	{
 		id:14, 
 		question:"./images/prompts-pics/interview.jpeg",
-		keyword:"interview"
+		keyword:"guidelines"
 	}
 ];
 /*[
@@ -107,18 +106,31 @@ let promptTexts = [
 	{id:19, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/lJIrF4YjHfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:["youtube", "embed", "tutorial"]},
 	{id:20, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:"rick"},
 ];*/
+
+// TODO DB connection
+// TODO Highscore table
+//		Insert name (prompt)
+//		Show table
+//		Back to main menu
+
+
+let maxPromptTotal = 0;
+let maxPrompts = [0, 2, 3, 5]; // Max prompts per level. Index 1 = level 1 prompts, index 2 = level 2 prompts and so on. Default is 5.
+let tempMaxPrompts;
+let maxLevels = 3;
+let levelInsertedKeyword = [];
+
 let tempPrompts = promptTexts;
 let promptsInserted;
 let activePrompts = [];
 let insertedKeywords = [];
-let maxPrompts = 5;
-let maxLevels = 3;
 let currentLevel = 1;
 let activePrompt = null;
 let activeSection = "main-menu";
 let keywordElementInput = document.querySelector("#keyword");
 let errorCanBeShown = true;
 let summaryTable = document.querySelector("#results");
+let levelSummaryTable = document.querySelector("#level-results");
 let currentPromptElement = document.querySelector("#current-prompt");
 let maxPromptElement = document.querySelector("#max-prompt");
 let promptElement = document.querySelector("#prompt-text");
@@ -126,6 +138,7 @@ let errorContainer = document.querySelector("#error-notifier");
 let enterButton = document.querySelector("#enter");
 let dummyButton = document.querySelector("#dummy-btn");
 let similarityElement = document.querySelector("#similarity");
+let levelSimilarityElement = document.querySelector("#level-similarity");
 let levelElement = document.querySelector("#level-nr");
 let correctAnswers = 0;
 let soundMuted = false;
@@ -219,19 +232,30 @@ function ShowSection(sectionName) {
 	SetSectionActive(sectionName);
 	
 	if(sectionName == "gameplay") {
-		StartGame();
+		if(currentLevel == 1) {
+			StartGame();
+		} else {
+			SetMaxPromptLabel();
+		}
 	} else if(sectionName == "summary") {
 		ShowSummary();
+	} else if(sectionName == "level-summary") {
+		ShowLevelSummary();
+	} else if(sectionName == "introduction") {
+		PlaySound(GetRandomKeywordSound());
 	}
 }
 
-function GetRandomItemsFrom(allPromptArr, howManyItems) {
+function GetRandomItemsFrom(allPromptArr) {
 	let fullArrayWithLevels = [];
-	let taken = new Array(howManyItems * maxLevels);
+	for(let i = 0; i < maxPrompts.length; i++) {
+		maxPromptTotal += maxPrompts[i];
+	}
+
 	let tempPromptArr = allPromptArr.slice();
 	
 	for(let i = 0; i < maxLevels; i++) {
-		let inOneLevel = howManyItems;
+		let inOneLevel = maxPrompts[i+1];
 		console.log(i);
 		var result = new Array(inOneLevel),
         len = tempPromptArr.length;
@@ -241,9 +265,9 @@ function GetRandomItemsFrom(allPromptArr, howManyItems) {
 		while (inOneLevel--) {
 			var x = Math.floor(Math.random() * len);
 			result[inOneLevel] = tempPromptArr.splice(x, 1)[0];
-			console.log("GetRandomItemsFrom", result[inOneLevel]);
-			len--;
+			len = tempPromptArr.length;
 		}
+		console.log("GetRandomItemsFrom", result[inOneLevel]);
 		fullArrayWithLevels[i] = result;
 	}
 	console.log("fullArrayWithLevels", fullArrayWithLevels);
@@ -251,32 +275,12 @@ function GetRandomItemsFrom(allPromptArr, howManyItems) {
     return fullArrayWithLevels;
 }
 
-function IsItemAlreadyInArray(findId, fullArrayWithLevels, result) {
-	for(let i = 0; i < maxLevels; i++) {
-		if(fullArrayWithLevels[i] === undefined) {
-			continue;
-		}
-		
-		for(let x = 0; x < maxLevels; x++) {
-			if(fullArrayWithLevels[i][x].id == findId) {
-				return true;
-			}
-		}
-	}
-	
-	for(let i = 0; i < result.length; i++) {
-		if(result[i] === undefined) {
-			continue;
-		}
-		if(result[i].id == findId) {
-			return true;
-		}
-	}
-	
-	return false;
-}
-
 function StartGame() {
+	levelInsertedKeyword = [];
+	for(let i = 0; i < maxPrompts.length; i++) {
+		levelInsertedKeyword[i] = [];
+	}
+
 	tempPrompts = promptTexts;
 	activePrompts = [];
 	insertedKeywords = [];
@@ -284,13 +288,14 @@ function StartGame() {
 	correctAnswers = 0;
 	currentLevel = 1;
 	keywordElementInput.value = "";
-	activePrompts = GetRandomItemsFrom(tempPrompts, 5);
+	activePrompts = GetRandomItemsFrom(tempPrompts);
 	SetNewToActivePrompt();
 	console.log(activePrompt);
 	SetActiveTextToPrompt();
 	SetCurrentPromptLabel();
 	SetMaxPromptLabel();
 	summaryTable.innerHTML = "";
+	levelSummaryTable.innerHTML = "";
 	UpdateLevelLabel();
 	PlaySound(GetRandomKeywordSound());
 	
@@ -303,7 +308,7 @@ function SetCurrentPromptLabel() {
 }
 
 function SetMaxPromptLabel() {
-	maxPromptElement.innerText = maxPrompts;
+	maxPromptElement.innerText = maxPrompts[currentLevel];
 }
 
 function GetImageElFromLink(linkUrl) {	
@@ -346,6 +351,7 @@ function SetNewToActivePrompt() {
 
 function SetToAnswers(keyword) {
 	insertedKeywords.push({id:activePrompt.id, keyword:keyword});
+	levelInsertedKeyword[currentLevel].push({id:activePrompt.id, keyword:keyword});
 }
 
 function GetPromptById(id) {
@@ -391,10 +397,12 @@ function InsertKeyword(event) {
 	SetToAnswers(keywordValue);
 	keywordElementInput.value = "";
 	
-	if((promptsInserted + 1) >= maxPrompts) {
+	if((promptsInserted + 1) >= maxPrompts[currentLevel]) {
 		if(currentLevel >= maxLevels) {
 			ShowSection("summary");
 			return;
+		} else {
+			ShowSection("level-summary");
 		}
 		
 		console.log("currenLavel 1 ", currentLevel);
@@ -469,24 +477,63 @@ function ShowSummary() {
 	console.log("SUMMARY");
 	console.log("Inserted keywords: "+promptsInserted);
 	console.log("Insrted keyword data: ", insertedKeywords);
-	
+	correctAnswers = 0;
+
 	AddRowToSummary("Your answer", "Prompt text", "Computer answer", undefined);
 	let promptCount = 0;
 	let levelCount = 0;
-	
+	tempMaxPrompts = maxPrompts.slice();
+	console.log("ShowSummary tempMaxPrompts", tempMaxPrompts);
+	console.log("ShowSummary tempMaxPrompts", tempMaxPrompts);
+	console.log("ShowSummary tempMaxPrompts", tempMaxPrompts);
+	AddRowToSummary("", "LEVEL 1", "", undefined);
+
 	for(let i = 0, insertedKeyword; insertedKeyword = insertedKeywords[i]; i++) {
-		if(promptCount % maxPrompts == 0) {
+		promptCount++;
+		let thisPrompt = GetPromptById(insertedKeyword.id);
+		//console.log("ShowSummary", thisPrompt, thisPrompt.question);
+		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword, thisPrompt.explanation);
+		console.log("ShowSummary tempMaxPrompts[levelCount+1]", tempMaxPrompts[levelCount+1]);
+
+		if(tempMaxPrompts[levelCount+1] > 0 && insertedKeywords[i+1] !== undefined) {
+			tempMaxPrompts[levelCount+1] --;
+			console.log("ShowSummary tempMaxPrompts DECCED", tempMaxPrompts[levelCount+1]);
+
+			if(tempMaxPrompts[levelCount+1] == 0) {
+				levelCount++;
+				console.log("ShowSummary tempMaxPrompts LVL COUNT++");
+				AddRowToSummary("", "LEVEL "+(levelCount+1), "", undefined);
+			}
+		}
+	}
+
+	similarityElement.innerHTML = "Similary between you and computer:<br> <strong>"+CalculateSimilarities()+"%</strong>";
+}
+
+function ShowLevelSummary() {
+	console.log(" LEVEL SUMMARY");
+	console.log("Inserted keywords: "+promptsInserted);
+	console.log("Insrted keyword data: ", insertedKeywords);
+	correctAnswers = 0;
+	levelSummaryTable.innerHTML = "";
+
+	AddRowToLevelSummary("Your answer", "Prompt text", "Computer answer", undefined);
+	let promptCount = 0;
+	let levelCount = 0;
+
+	for(let i = 0, insertedKeyword; insertedKeyword = levelInsertedKeyword[currentLevel][i]; i++) {
+		if(promptCount % maxPrompts[currentLevel] == 0) {
 			levelCount++;
-			AddRowToSummary("", "LEVEL "+levelCount, "", undefined);
+			AddRowToLevelSummary("", "LEVEL "+currentLevel, "", undefined);
 		}
 		promptCount++;
-		
+
 		let thisPrompt = GetPromptById(insertedKeyword.id);
 		console.log("ShowSummary", thisPrompt, thisPrompt.question);
-		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword, thisPrompt.explanation);
+		AddRowToLevelSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword, thisPrompt.explanation);
 	}
-	
-	similarity.innerHTML = "Similary between you and computer:<br> <strong>"+CalculateSimilarities()+"%</strong>";
+
+	levelSimilarityElement.innerHTML = "Similary between you and computer:<br> <strong>"+CalculateLevelSimilarities()+"%</strong>";
 }
 
 function GetComputerAnswerStr(computerAnswer) {
@@ -563,7 +610,7 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer, exaplanationStr
 	}
 
 	computerTd.appendChild(paraf);
-	
+
 	if(IsQuestionImage(promptText)) {
 		let imageEl = GetImageElFromLink(promptText);
 		promptTd.appendChild(imageEl);
@@ -572,10 +619,10 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer, exaplanationStr
 		promptParaf.innerHTML = promptText;
 		promptTd.appendChild(promptParaf);
 	}
-	
+
 	let urAnswer = yourAnswer.toLowerCase();
 	let answerCorrectness = CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
-	
+
 	if(yourAnswer == "" && computerAnswer == "") {
 		row.classList.add("level");
 	} else if(answerCorrectness === 1) {
@@ -585,11 +632,60 @@ function AddRowToSummary(yourAnswer, promptText, computerAnswer, exaplanationStr
 		row.classList.add("half-correct");
 		correctAnswers += CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
 	}
-	
+
 	row.appendChild(yourTd);
 	row.appendChild(promptTd);
 	row.appendChild(computerTd);
 	summaryTable.appendChild(row);
+}
+
+function AddRowToLevelSummary(yourAnswer, promptText, computerAnswer, exaplanationStr) {
+	let row = document.createElement("tr");
+	let yourTd = document.createElement("td");
+	let promptTd = document.createElement("td");
+	let computerTd = document.createElement("td");
+
+	let yourTdP = document.createElement("p");
+	yourTdP.innerText = yourAnswer.toUpperCase();
+	yourTd.appendChild(yourTdP);
+
+	let paraf = document.createElement("p");
+	paraf.innerHTML = GetComputerAnswerStr(computerAnswer);
+
+	if(exaplanationStr !== undefined) {
+		paraf.classList.add("w3-tooltip");
+		paraf.innerHTML += '<span style="position:absolute;left:0;bottom:18px" class="w3-text w3-tag">'+exaplanationStr+'</span>' +
+			'<span class="explanation">i</span>';
+	}
+
+	computerTd.appendChild(paraf);
+
+	if(IsQuestionImage(promptText)) {
+		let imageEl = GetImageElFromLink(promptText);
+		promptTd.appendChild(imageEl);
+	} else {
+		let promptParaf = document.createElement("p");
+		promptParaf.innerHTML = promptText;
+		promptTd.appendChild(promptParaf);
+	}
+
+	let urAnswer = yourAnswer.toLowerCase();
+	let answerCorrectness = CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
+
+	if(yourAnswer == "" && computerAnswer == "") {
+		row.classList.add("level");
+	} else if(answerCorrectness === 1) {
+		row.classList.add("correct");
+		correctAnswers += CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
+	} else if(answerCorrectness === 0.5) {
+		row.classList.add("half-correct");
+		correctAnswers += CheckComputerAnswerWithKeyword(yourAnswer, computerAnswer);
+	}
+
+	row.appendChild(yourTd);
+	row.appendChild(promptTd);
+	row.appendChild(computerTd);
+	levelSummaryTable.appendChild(row);
 }
 
 function DeleteLastCharOfInput() {
@@ -601,8 +697,14 @@ function DeleteLastCharOfInput() {
 
 function CalculateSimilarities() {
 	console.log("CalculateSimilarities: correctAnswers", correctAnswers, "maxPrompts", maxPrompts, "maxLevels", maxLevels, "(maxPrompts * maxLevels)", (maxPrompts * maxLevels), "(correctAnswers/(maxPrompts * maxLevels))", (correctAnswers/(maxPrompts * maxLevels)));
-	let similarity = (correctAnswers/(maxPrompts * maxLevels)) * 100;
-	return similarity.toFixed(2);
+	let sim = (correctAnswers/(maxPromptTotal)) * 100;
+	return sim.toFixed(2);
+}
+
+function CalculateLevelSimilarities() {
+	console.log("CalculateLevelSimilarities: correctAnswers", correctAnswers, "maxPrompts", maxPrompts, "maxLevels", maxLevels, "(maxPrompts * maxLevels)", (maxPrompts * maxLevels), "(correctAnswers/(maxPrompts * maxLevels))", (correctAnswers/(maxPrompts * maxLevels)), "currentLvl", currentLevel);
+	let sim = (correctAnswers/(maxPrompts[currentLevel])) * 100;
+	return sim.toFixed(2);
 }
 
 document.body.onkeyup = function(e){
@@ -619,6 +721,9 @@ document.onkeypress = function (e) {
 		ShowSection("introduction");
 		return;
 	} else if(activeSection === "introduction" && e.keyCode == 13) {
+		ShowSection("gameplay");
+		return;
+	} else if(activeSection === "level-summary" && e.keyCode == 13) {
 		ShowSection("gameplay");
 		return;
 	} else if(activeSection === "summary" && e.keyCode == 13) {

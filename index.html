@@ -48,7 +48,7 @@
 	<section id="introduction">
 		<h2>Introduction</h2>
 		<p>
-			The game has 3 levels. 1st level has 1 prompt, 2nd level has 3 prompts & 3rd level has 5 prompts. After every level you can see the results how correct you are. Prompt could have multiple keywords as answer and 1 keyword can be 1-3 words long. Game also registers partly correct answer for example if the prompt answer is "interview notes" and you insert "notes" then you got half a point.
+			The game has 3 levels. 1st level has 2 prompts, 2nd level has 3 prompts & 3rd level has 5 prompts. After every level you can see the results how correct you are. Prompt could have multiple keywords as answer and 1 keyword can be 1-3 words long. Game also registers partly correct answer for example if the prompt answer is "interview notes" and you insert "notes" then you got half a point.
 		</p>
 		<button id="play-btn" onclick="ShowSection('introduction')">
 			<img src="./images/start-btn.svg" alt="Bureau Start Button"/>
@@ -76,6 +76,17 @@
 				<button class="letter" id="letter-backspace" onclick='KeyPressed("backspace");'>← Backspace</button>
 			</div>
 		</div>
+	</section>
+
+	<section id="level-summary">
+		<h2>Level Summary</h2>
+		<p id="level-similarity"></p>
+		<div class="end-content">
+			<table id="level-results"></table>
+		</div>
+		<button id="next-level" onclick="ShowSection('gameplay')">
+			<img src="./images/start-btn.svg" alt="Start new level" />
+		</button>
 	</section>
 
 	<section id="summary">

@@ -400,22 +400,31 @@ section#introduction h2{
 .footer > div {
 	width: 1024px;
 	margin: 0 auto;
+}
+
+.footer > div:first-child {
 	padding-top: 40px;
-	padding-bottom: 40px;
 }
 
 .footer > div > div {
-	width: 50%;
+	width: 24%;
 	vertical-align: top;
+	height: 490px;
+	background: #FFF;
+	margin-left: -4px;
 }
 
 .footer > div > div:first-child {
-	width: 25%;
+	width: 23%;
+	margin-left: 0;
 }
 
 .footer > div > div:last-child {
-	width: 24%;
+	width: 50%;
 	vertical-align: top;
+	background: transparent;
+	padding-left: 20px;
+	margin-left: 0;
 }
 
 .footer h3 {
@@ -423,6 +432,29 @@ section#introduction h2{
 	font-family: BalooThambi2-Bold;
 	font-weight: 100;
 }
+
+.footer img {
+	width: 100%;
+	background: #FFF;
+}
+
+.footer img.tlu-logo {
+	background: #FFF;
+    width: 88%;
+    padding: 30px 15px;
+}
+
+.footer img.life-logo {
+	width: 100%;
+}
+
+.footer img.hitsa-logo {
+	width: 100%;
+}
+
+/*.footer img.eu-logo {
+	width: 18%;
+}*/
 
 strong {
 	font-family: BalooThambi2-Bold;

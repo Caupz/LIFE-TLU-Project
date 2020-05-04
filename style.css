@@ -440,7 +440,7 @@ section#introduction h2{
 
 .footer img.tlu-logo {
 	background: #FFF;
-    width: 88%;
+    width: 87%;
     padding: 30px 15px;
 }
 
@@ -475,6 +475,10 @@ strong {
 	margin: 20px auto;
 }
 
+.mobile-version {
+	display: none;
+}
+
 @media only screen and (max-width: 1050px) {
 	.container, .footer > div {
 		width: 100%;
@@ -487,8 +491,37 @@ strong {
 		margin: 0 auto;
 		text-align: center;
 	}
+	
+	.footer img.tlu-logo, .footer img.life-logo, .footer img.hitsa-logo {
+		width: 24%;
+	}
+	
+	.footer img.eu-logo {
+		width: 25%;
+	}
+	.mobile-version {
+		display: block;
+		padding-top: 40px;
+	}
+	.desktop-version {
+		display: none;
+	}
+	.footer .mobile-version div {
+		background: transparent;
+		height: auto;
+	}
+	.footer .mobile-version div:last-child {
+		background: #FFF;
+	}
+	.footer .mobile-version div:last-child img {
+		vertical-align: top;
+	}
 }
 @media only screen and (max-width: 680px) {
+	.mobile-version .img-logo {
+		width: 50% !important;
+	}
+	
 	.prompt-container {
 		padding: 30px;
 		width: 85%;

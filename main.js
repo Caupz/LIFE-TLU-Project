@@ -1,4 +1,3 @@
-// TODO console.log cleanup when the project is done
 
 let keyboard = [
 	["Q","W","E","R","T","Y","U","I","O","P"],
@@ -81,41 +80,134 @@ let promptTexts = [
 		id:14, 
 		question:"./images/prompts-pics/interview.jpeg",
 		keyword:"guidelines"
+	},
+	{
+		id:15, 
+		question:"./images/prompts-pics/area chart.png", 
+		keyword:"area chart" 
+	},
+	{
+		id:16, 
+		question:"./images/prompts-pics/Bar chart.png", 
+		keyword:"Bar chart" 
+	},
+	{
+		id:17, 
+		question:"./images/prompts-pics/candlestick chart.png",
+		keyword:"candlestick chart"
+	},
+	{
+		id:18, 
+		question:"./images/prompts-pics/column chart.png", 
+		keyword:"column chart"
+	},
+	{
+		id:19, 
+		question:"./images/prompts-pics/combo chart.png", 
+		keyword:"combo chart"
+	},
+	{
+		id:20, 
+		question:"./images/prompts-pics/Frequency.png", 
+		keyword:"Frequency"
+	},
+	{
+		id:21, 
+		question:"./images/prompts-pics/line chart.png", 
+		keyword:"line chart"
+	},
+	{
+		id:22, 
+		question:"./images/prompts-pics/mean.png", 
+		keyword:"mean"
+	},
+	{
+		id:23, 
+		question:"./images/prompts-pics/mean2.png", 
+		keyword:"mean"
+	},
+	{
+		id:24, 
+		question:"./images/prompts-pics/mean3.png", 
+		keyword:"mean"
+	},
+	{
+		id:25, 
+		question:"./images/prompts-pics/mean-mode-median.png", 
+		keyword:["mean", "mode", "median"]
+	},
+	{
+		id:26, 
+		question:"./images/prompts-pics/median.png", 
+		keyword:"median"
+	},
+	{
+		id:27, 
+		question:"./images/prompts-pics/median1.png", 
+		keyword:"median"
+	},
+	{
+		id:28, 
+		question:"./images/prompts-pics/median2.png", 
+		keyword:"median"
+	},
+	{
+		id:29, 
+		question:"./images/prompts-pics/mode.png",
+		keyword:"mode"
+	},
+	{
+		id:30, 
+		question:"./images/prompts-pics/mode1.png", 
+		keyword:"mode"
+	},
+	{
+		id:31, 
+		question:"./images/prompts-pics/pie chart.png", 
+		keyword:"pie chart"
+	},
+	{
+		id:32, 
+		question:"./images/prompts-pics/scatter chart.png", 
+		keyword:"scatter chart"
+	},
+	{
+		id:33, 
+		question:"./images/prompts-pics/Standard Deviation.png",
+		keyword:"Stardard Deviation"
+	},
+	{
+		id: 34, 
+		question: '<iframe src="https://giphy.com/embed/l2QDLc1d9FEy7Ip5m" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/soulpancake-look-looking-l2QDLc1d9FEy7Ip5m">via GIPHY</a></p>',
+		keyword:"observation"
+	},
+	{
+		id: 35, 
+		question: '<iframe src="https://giphy.com/embed/5z9K3fOg2NRIzwmaKH" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/talking-thinking-reading-5z9K3fOg2NRIzwmaKH">via GIPHY</a></p>',
+		keyword:"focus group"
+	},
+	{
+		id: 36, 
+		question: '<iframe src="https://giphy.com/embed/fng8OzU2DvO2NCGeLY" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/fng8OzU2DvO2NCGeLY">via GIPHY</a></p>',
+		keyword:"pie chart"
+	},
+	{
+		id: 37, 
+		question: '<iframe src="https://giphy.com/embed/8gNQZ9IpkcdiAjfOgN" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/illustration-marketing-data-8gNQZ9IpkcdiAjfOgN">via GIPHY</a></p>',
+		keyword:"area chart"
+	},
+	{
+		id: 38,
+		question: '<iframe src="https://giphy.com/embed/RfMFXMomqJFIWzlxOD" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/hyperrpg-twitch-kollok-kollok1991-RfMFXMomqJFIWzlxOD">via GIPHY</a></p>',
+		keyword:["document study", "study", "case study"]
+	}, 
+	{
+		id: 39, 
+		question: '<iframe src="https://giphy.com/embed/3Kp6sZlMqxphC" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/benglabs-httpswwwopenbeeldennlmedia10811-3Kp6sZlMqxphC">via GIPHY</a></p>',
+		keyword:["document study", "study", "case study"]
 	}
+
 ];
-/*[
-	{id:0, question:"Some text about quizis", keyword:["quiz", "quizes", "questionaries"], explanation: "here will be some additional info why computer answer is correct"},
-	{id:1, question:"Some text about surveys", keyword:["survey", "surveys"], explanation: "here will be some additional info why computer answer is correct"},
-	{id:2, question:"Some text about experiments", keyword:["experiment", "exp"], explanation: "here will be some additional info why computer answer is correct"},
-	{id:3, question:"Some text about interviews", keyword:"interview", explanation: "here will be some additional info why computer answer is correct"},
-	{id:4, question:"Some text about case studies", keyword:"case study", explanation: "here will be some additional info why computer answer is correct"},
-	{id:5, question:"Some text about observations", keyword:"observation", explanation: "here will be some additional info why computer answer is correct"},
-	{id:6, question:"https://avatars1.githubusercontent.com/u/13436812?s=460&v=4", keyword:"caupo-profile", explanation: "here will be some additional info why computer answer is correct"},
-	{id:7, question:"Observing", keyword:"observing"},
-	{id:8, question:"quizis", keyword:"quizis"},
-	{id:9, question:"surveys", keyword:"surveys"},
-	{id:10, question:"experiments", keyword:"experiments"},
-	{id:11, question:"interviews", keyword:"interviews"},
-	{id:12, question:"case studies", keyword:"case studies"},
-	{id:13, question:"images", keyword:"images"},
-	{id:14, question:"south park", keyword:"south park"},
-	{id:15, question:"code monkeys are the best monkeys", keyword:"codemonkey"},
-	{id:16, question:"Counter Strike", keyword:"CSGO"},
-	{id:17, question:"i dont event know what to put here", keyword:"dunno"},
-	{id:18, question:"bananas", keyword:"banana"},
-	{id:19, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/lJIrF4YjHfQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:["youtube", "embed", "tutorial"]},
-	{id:20, question:'<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>', keyword:"rick"},
-];*/
-// DONE Section addida highschore
-
-// TODO Highscore table
-// 		Nupuvajutuste mappingut peale summaryt muuta et küsib prompti ja highschore ja highscorest main menusse
-//		Insert name (prompt), similarity percent, created_at
-//			Ajax query
-//		Show table
-//			Ajax query
-//		Back to main menu
-
 
 let maxPromptTotal = 0;
 let maxPrompts = [0, 2, 3, 5]; // Max prompts per level. Index 1 = level 1 prompts, index 2 = level 2 prompts and so on. Default is 5.
@@ -202,7 +294,7 @@ function InitKeyboard() {
 			let btnElement = document.createElement("button");
 			btnElement.id = "letter-"+letter;
 			btnElement.innerText = letter;
-			btnElement.addEventListener("click", function() { console.log("KEY PRESS "+letter); KeyPressed(letter); });
+			btnElement.addEventListener("click", function() { KeyPressed(letter); });
 			btnElement.className = "letter";
 			keyboardContainer.appendChild(btnElement);
 		}
@@ -247,13 +339,9 @@ function ShowSection(sectionName) {
 		request.open("POST", "highscore.php");
 		request.onload = function(e) {
 			if (request.status == 200) {
-				console.log("SERVERI VASTUS", this.responseText);
-
 				let xmlhttp = new XMLHttpRequest();
-				console.log("HIGHSCORE STUFF");
 				xmlhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
-						console.log("HIGHSCORE GET", this.responseText);
 						var playerScores = JSON.parse(this.responseText);
 						highscoreTable.innerHTML = "";
 
@@ -263,14 +351,13 @@ function ShowSection(sectionName) {
 						}
 
 						SetSectionActive("highscore");
-						console.log("playerScores", playerScores);
 					}
 				};
 				xmlhttp.open("GET", "highscore.php", true);
 				xmlhttp.send();
 
 			} else {
-				console.log("SERVERI ERROR", request.status);
+				console.log("GAME SERVER ERROR", request.status);
 			}
 		};
 
@@ -324,7 +411,6 @@ function GetRandomItemsFrom(allPromptArr) {
 	
 	for(let i = 0; i < maxLevels; i++) {
 		let inOneLevel = maxPrompts[i+1];
-		console.log(i);
 		var result = new Array(inOneLevel),
         len = tempPromptArr.length;
 		if (inOneLevel > len)
@@ -335,10 +421,8 @@ function GetRandomItemsFrom(allPromptArr) {
 			result[inOneLevel] = tempPromptArr.splice(x, 1)[0];
 			len = tempPromptArr.length;
 		}
-		console.log("GetRandomItemsFrom", result[inOneLevel]);
 		fullArrayWithLevels[i] = result;
 	}
-	console.log("fullArrayWithLevels", fullArrayWithLevels);
     
     return fullArrayWithLevels;
 }
@@ -358,7 +442,6 @@ function StartGame() {
 	keywordElementInput.value = "";
 	activePrompts = GetRandomItemsFrom(tempPrompts);
 	SetNewToActivePrompt();
-	console.log(activePrompt);
 	SetActiveTextToPrompt();
 	SetCurrentPromptLabel();
 	SetMaxPromptLabel();
@@ -366,9 +449,6 @@ function StartGame() {
 	levelSummaryTable.innerHTML = "";
 	UpdateLevelLabel();
 	PlaySound(GetRandomKeywordSound());
-	
-	console.log("GAME STARTED");
-	console.log("PROMPTS: ", activePrompts);
 }
 
 function SetCurrentPromptLabel() {
@@ -412,7 +492,6 @@ function EnableErrors() {
 
 function SetNewToActivePrompt() {
 	promptsInserted++;
-	console.log("SetNewToActivePrompt", currentLevel, promptsInserted);
 	activePrompt = activePrompts[(currentLevel-1)][promptsInserted];
 	SetCurrentPromptLabel();
 }
@@ -452,7 +531,6 @@ function HideError() {
 function InsertKeyword(event) {
 	let keywordValue = keywordElementInput.value;
 	if(event !== undefined) {
-		console.log("keycode", event.keyCode);
 		event.preventDefault();
 	}
 	
@@ -473,13 +551,10 @@ function InsertKeyword(event) {
 			ShowSection("level-summary");
 		}
 		
-		console.log("currenLavel 1 ", currentLevel);
 		currentLevel++;
-		console.log("currenLavel 2 ", currentLevel);
 		promptsInserted = -1;
 		UpdateLevelLabel();
 	}
-	console.log("curentLvl, maxPrompts, promptsInserted ", currentLevel, maxPrompts, promptsInserted);
 	
 	SetNewToActivePrompt();
 	SetActiveTextToPrompt();
@@ -504,12 +579,10 @@ function GetRandomKeywordSound() {
 
 function getRandomArbitrary(min, max) {
 	let rand = Math.random() * (max - min) + min;
-	//console.log("RANDOM", parseInt(rand.toFixed(0)));
     return parseInt(rand.toFixed(0));
 }
 
 function KeyPressed(letter) {
-	//console.log("KEY PRESSED ["+letter+"]");
 	HideError();
 	PlaySound(GetRandomKeyboardSound());
 	
@@ -542,34 +615,24 @@ function KeyNonActive(letter) {
 }
 
 function ShowSummary() {
-	console.log("SUMMARY");
-	console.log("Inserted keywords: "+promptsInserted);
-	console.log("Insrted keyword data: ", insertedKeywords);
 	correctAnswers = 0;
 
 	AddRowToSummary("Your answer", "Prompt text", "Computer answer", undefined);
 	let promptCount = 0;
 	let levelCount = 0;
 	tempMaxPrompts = maxPrompts.slice();
-	console.log("ShowSummary tempMaxPrompts", tempMaxPrompts);
-	console.log("ShowSummary tempMaxPrompts", tempMaxPrompts);
-	console.log("ShowSummary tempMaxPrompts", tempMaxPrompts);
 	AddRowToSummary("", "LEVEL 1", "", undefined);
 
 	for(let i = 0, insertedKeyword; insertedKeyword = insertedKeywords[i]; i++) {
 		promptCount++;
 		let thisPrompt = GetPromptById(insertedKeyword.id);
-		//console.log("ShowSummary", thisPrompt, thisPrompt.question);
 		AddRowToSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword, thisPrompt.explanation);
-		console.log("ShowSummary tempMaxPrompts[levelCount+1]", tempMaxPrompts[levelCount+1]);
 
 		if(tempMaxPrompts[levelCount+1] > 0 && insertedKeywords[i+1] !== undefined) {
 			tempMaxPrompts[levelCount+1] --;
-			console.log("ShowSummary tempMaxPrompts DECCED", tempMaxPrompts[levelCount+1]);
 
 			if(tempMaxPrompts[levelCount+1] == 0) {
 				levelCount++;
-				console.log("ShowSummary tempMaxPrompts LVL COUNT++");
 				AddRowToSummary("", "LEVEL "+(levelCount+1), "", undefined);
 			}
 		}
@@ -580,9 +643,6 @@ function ShowSummary() {
 }
 
 function ShowLevelSummary() {
-	console.log(" LEVEL SUMMARY");
-	console.log("Inserted keywords: "+promptsInserted);
-	console.log("Insrted keyword data: ", insertedKeywords);
 	correctAnswers = 0;
 	levelSummaryTable.innerHTML = "";
 
@@ -598,7 +658,6 @@ function ShowLevelSummary() {
 		promptCount++;
 
 		let thisPrompt = GetPromptById(insertedKeyword.id);
-		console.log("ShowSummary", thisPrompt, thisPrompt.question);
 		AddRowToLevelSummary(insertedKeyword.keyword, thisPrompt.question, thisPrompt.keyword, thisPrompt.explanation);
 	}
 
@@ -765,13 +824,11 @@ function DeleteLastCharOfInput() {
 }
 
 function CalculateSimilarities() {
-	console.log("CalculateSimilarities: correctAnswers", correctAnswers, "maxPrompts", maxPrompts, "maxLevels", maxLevels, "(maxPrompts * maxLevels)", (maxPrompts * maxLevels), "(correctAnswers/(maxPrompts * maxLevels))", (correctAnswers/(maxPrompts * maxLevels)));
 	let sim = (correctAnswers/(maxPromptTotal)) * 100;
 	return sim.toFixed(2);
 }
 
 function CalculateLevelSimilarities() {
-	console.log("CalculateLevelSimilarities: correctAnswers", correctAnswers, "maxPrompts", maxPrompts, "maxLevels", maxLevels, "(maxPrompts * maxLevels)", (maxPrompts * maxLevels), "(correctAnswers/(maxPrompts * maxLevels))", (correctAnswers/(maxPrompts * maxLevels)), "currentLvl", currentLevel);
 	let sim = (correctAnswers/(maxPrompts[currentLevel])) * 100;
 	return sim.toFixed(2);
 }
@@ -806,8 +863,6 @@ document.onkeypress = function (e) {
 	}
 	
     e = e || window.event;
-	
-	//console.log("keycode", e.keyCode);
 	
 	switch(e.keyCode) {
 		case 81:case 113: KeyPressed("Q"); break;

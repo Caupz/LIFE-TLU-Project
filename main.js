@@ -83,27 +83,27 @@ let promptTexts = [
 	},
 	{
 		id:15, 
-		question:"./images/prompts-pics/area chart.png", 
+		question:"./images/prompts-pics/area-chart.png", 
 		keyword:"area chart" 
 	},
 	{
 		id:16, 
-		question:"./images/prompts-pics/Bar chart.png", 
+		question:"./images/prompts-pics/Bar-chart.png", 
 		keyword:"Bar chart" 
 	},
 	{
 		id:17, 
-		question:"./images/prompts-pics/candlestick chart.png",
+		question:"./images/prompts-pics/candlestick-chart.png",
 		keyword:"candlestick chart"
 	},
 	{
 		id:18, 
-		question:"./images/prompts-pics/column chart.png", 
+		question:"./images/prompts-pics/column-chart.png", 
 		keyword:"column chart"
 	},
 	{
 		id:19, 
-		question:"./images/prompts-pics/combo chart.png", 
+		question:"./images/prompts-pics/combo-chart.png", 
 		keyword:"combo chart"
 	},
 	{
@@ -113,7 +113,7 @@ let promptTexts = [
 	},
 	{
 		id:21, 
-		question:"./images/prompts-pics/line chart.png", 
+		question:"./images/prompts-pics/line-chart.png", 
 		keyword:"line chart"
 	},
 	{
@@ -128,7 +128,7 @@ let promptTexts = [
 	},
 	{
 		id:24, 
-		question:"./images/prompts-pics/mean3.png", 
+		question:"./images/prompts-pics/mean3.png?v=4", 
 		keyword:"mean"
 	},
 	{
@@ -163,17 +163,17 @@ let promptTexts = [
 	},
 	{
 		id:31, 
-		question:"./images/prompts-pics/pie chart.png", 
+		question:"./images/prompts-pics/pie-chart.png", 
 		keyword:"pie chart"
 	},
 	{
 		id:32, 
-		question:"./images/prompts-pics/scatter chart.png", 
+		question:"./images/prompts-pics/scatter-chart.png", 
 		keyword:"scatter chart"
 	},
 	{
 		id:33, 
-		question:"./images/prompts-pics/Standard Deviation.png",
+		question:"./images/prompts-pics/Standard-Deviation.png",
 		keyword:"Stardard Deviation"
 	},
 	{
@@ -847,6 +847,7 @@ document.onkeypress = function (e) {
 		ShowSection("introduction");
 		return;
 	} else if(activeSection === "introduction" && e.keyCode == 13) {
+		currentLevel = 1;
 		ShowSection("gameplay");
 		return;
 	} else if(activeSection === "level-summary" && e.keyCode == 13) {

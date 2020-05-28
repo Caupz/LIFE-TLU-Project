@@ -6,203 +6,203 @@ let keyboard = [
 	["_",],
 ];
 let promptTexts = [
-	{
-		id:0, 
-		question:"./images/prompts-pics/thematicAnalys.png", 
-		keyword:["thematic analys", "picture", "image"]
+		{
+		id:0,
+		question:"./images/prompts-pics/thematicAnalys.png",
+		keyword:["thematic analysis", "picture", "image"]
 	},
 	{
-		id:1, 
-		question:"./images/prompts-pics/sample.png", 
-		keyword:"data" 
+		id:1,
+		question:"./images/prompts-pics/sample.png",
+		keyword:"data"
 	},
 	{
-		id:2, 
+		id:2,
 		question:"./images/prompts-pics/questionnaire-scale.jpg",
 		keyword:["questionnaire scale", "scale"]
 	},
 	{
-		id:3, 
-		question:"./images/prompts-pics/interviewNotes.png", 
+		id:3,
+		question:"./images/prompts-pics/interviewNotes.png",
 		keyword:["interview notes", "interview", "notes"]
 	},
 	{
-		id:4, 
-		question:"./images/prompts-pics/interview1.jpg", 
+		id:4,
+		question:"./images/prompts-pics/interview1.jpg",
 		keyword:["interview", "recorder", "recording"]
 	},
 	{
-		id:5, 
-		question:"./images/prompts-pics/interview.jpeg", 
-		keyword:"guidelines"
+		id:5,
+		question:"./images/prompts-pics/interview.jpeg",
+		keyword:["guidelines", "interview"]
 	},
 	{
-		id:6, 
-		question:"./images/prompts-pics/interview-notes.png", 
-		keyword:"interview notes"
+		id:6,
+		question:"./images/prompts-pics/interview-notes.png",
+		keyword:["interview notes", "interview"]
 	},
 	{
-		id:7, 
-		question:"./images/prompts-pics/dataset2.png", 
-		keyword:"chart"
+		id:7,
+		question:"./images/prompts-pics/dataset2.png",
+		keyword:["chart", "data analysis"]
 	},
 	{
-		id:8, 
-		question:"./images/prompts-pics/dataSet6.png", 
-		keyword:["picture", "image"]
+		id:8,
+		question:"./images/prompts-pics/dataSet6.png",
+		keyword:["picture", "image", "chart", "data analysis", "dataset"]
 	},
 	{
-		id:9, 
-		question:"./images/prompts-pics/dataSet5.jpg", 
-		keyword:"chart"
+		id:9,
+		question:"./images/prompts-pics/dataSet5.jpg",
+		keyword:["chart", "data analysis", "dataset"]
 	},
 	{
-		id:10, 
-		question:"./images/prompts-pics/dataSet3.png", 
+		id:10,
+		question:"./images/prompts-pics/dataSet3.png",
+		keyword:["dataset", "correlation chart", "correlation", "chart"]
+	},
+	{
+		id:11,
+		question:"./images/prompts-pics/dataSet1.jpg",
 		keyword:["dataset", "correlation chart", "correlation"]
 	},
 	{
-		id:11, 
-		question:"./images/prompts-pics/dataSet1.jpg", 
-		keyword:["dataset", "correlation chart", "correlation"]
+		id:12,
+		question:"./images/prompts-pics/dataSet.jpg",
+		keyword:["picture", "image", "dataset"]
 	},
 	{
-		id:12, 
-		question:"./images/prompts-pics/dataSet.jpg", 
-		keyword:["picture", "image"]
-	},
-	{
-		id:13, 
-		question:"./images/prompts-pics/survey.png?v=2", 
+		id:13,
+		question:"./images/prompts-pics/survey.png?v=2",
 		keyword:["survey", "questionnaire"]
 	},
 	{
-		id:14, 
+		id:14,
 		question:"./images/prompts-pics/interview.jpeg",
-		keyword:"guidelines"
+		keyword:["guidelines", "interview"]
 	},
 	{
-		id:15, 
-		question:"./images/prompts-pics/area-chart.png", 
-		keyword:"area chart" 
+		id:15,
+		question:"./images/prompts-pics/area-chart.png",
+		keyword:["area chart", "chart", "data analysis", "dataset"]
+		},
+	{
+		id:16,
+		question:"./images/prompts-pics/Bar-chart.png",
+		keyword:"Bar chart"
 	},
 	{
-		id:16, 
-		question:"./images/prompts-pics/Bar-chart.png", 
-		keyword:"Bar chart" 
-	},
-	{
-		id:17, 
+		id:17,
 		question:"./images/prompts-pics/candlestick-chart.png",
-		keyword:"candlestick chart"
+		keyword:["candlestick chart", "chart", "data analysis", "dataset"]
 	},
 	{
-		id:18, 
-		question:"./images/prompts-pics/column-chart.png", 
-		keyword:"column chart"
+		id:18,
+		question:"./images/prompts-pics/column-chart.png",
+		keyword:["column chart", "chart", "data analysis", "dataset"]
 	},
 	{
-		id:19, 
-		question:"./images/prompts-pics/combo-chart.png", 
-		keyword:"combo chart"
+		id:19,
+		question:"./images/prompts-pics/combo-chart.png",
+		keyword:["combo chart", "chart", "data analysis", "dataset"]
 	},
 	{
-		id:20, 
-		question:"./images/prompts-pics/Frequency.png", 
-		keyword:"Frequency"
+		id:20,
+		question:"./images/prompts-pics/Frequency.png",
+		keyword:["Frequency", "data analysis"]
 	},
 	{
-		id:21, 
-		question:"./images/prompts-pics/line-chart.png", 
-		keyword:"line chart"
+		id:21,
+		question:"./images/prompts-pics/line-chart.png",
+		keyword: [line chart", "chart", "data analysis", "dataset"]
 	},
 	{
-		id:22, 
-		question:"./images/prompts-pics/mean.png", 
-		keyword:"mean"
+		id:22,
+		question:"./images/prompts-pics/mean.png",
+		keyword:["mean", "descriptive statistics"]
 	},
 	{
-		id:23, 
-		question:"./images/prompts-pics/mean2.png", 
-		keyword:"mean"
+		id:23,
+		question:"./images/prompts-pics/mean2.png",
+		keyword:["mean","descriptive statistics"]
 	},
 	{
-		id:24, 
-		question:"./images/prompts-pics/mean3.png?v=4", 
-		keyword:"mean"
+		id:24,
+		question:"./images/prompts-pics/mean3.png?v=4",
+		keyword:["mean", "descriptive statistics"]
 	},
 	{
-		id:25, 
-		question:"./images/prompts-pics/mean-mode-median.png", 
-		keyword:["mean", "mode", "median"]
+		id:25,
+		question:"./images/prompts-pics/mean-mode-median.png",
+		keyword:["mean", "mode", "median", "descriptive statistics"]
 	},
 	{
-		id:26, 
-		question:"./images/prompts-pics/median.png", 
-		keyword:"median"
+		id:26,
+		question:"./images/prompts-pics/median.png",
+		keyword:["median", "descriptive statistics"]
 	},
 	{
-		id:27, 
-		question:"./images/prompts-pics/median1.png", 
-		keyword:"median"
+		id:27,
+		question:"./images/prompts-pics/median1.png",
+		keyword:["median", "descriptive statistics"]
 	},
 	{
-		id:28, 
-		question:"./images/prompts-pics/median2.png", 
-		keyword:"median"
+		id:28,
+		question:"./images/prompts-pics/median2.png",
+		keyword:["median", "descriptive statistics"]
 	},
 	{
-		id:29, 
+		id:29,
 		question:"./images/prompts-pics/mode.png",
-		keyword:"mode"
+		keyword:["mode","descriptive statistics"]
 	},
 	{
-		id:30, 
-		question:"./images/prompts-pics/mode1.png", 
-		keyword:"mode"
+		id:30,
+		question:"./images/prompts-pics/mode1.png",
+		keyword:["mode", "descriptive statistics"]
 	},
 	{
-		id:31, 
-		question:"./images/prompts-pics/pie-chart.png", 
-		keyword:"pie chart"
+		id:31,
+		question:"./images/prompts-pics/pie-chart.png",
+		keyword:["pie chart", "chart", "data analysis", "dataset"]
 	},
 	{
-		id:32, 
-		question:"./images/prompts-pics/scatter-chart.png", 
-		keyword:"scatter chart"
+		id:32,
+		question:"./images/prompts-pics/scatter-chart.png",
+		keyword:[scatter chart", "chart", "data analysis", "dataset"]
 	},
 	{
-		id:33, 
+		id:33,
 		question:"./images/prompts-pics/Standard-Deviation.png",
-		keyword:"Stardard Deviation"
+		keyword:["stadard deviation", "descriptive statistics"]
 	},
 	{
-		id: 34, 
+		id: 34,
 		question: '<iframe src="https://giphy.com/embed/l2QDLc1d9FEy7Ip5m" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/soulpancake-look-looking-l2QDLc1d9FEy7Ip5m">via GIPHY</a></p>',
-		keyword:"observation"
+		keyword: ["observation", "method"]
 	},
 	{
-		id: 35, 
+		id: 35,
 		question: '<iframe src="https://giphy.com/embed/5z9K3fOg2NRIzwmaKH" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/talking-thinking-reading-5z9K3fOg2NRIzwmaKH">via GIPHY</a></p>',
-		keyword:"focus group"
+		keyword:["focus group", "method"]
 	},
 	{
-		id: 36, 
+		id: 36,
 		question: '<iframe src="https://giphy.com/embed/fng8OzU2DvO2NCGeLY" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/fng8OzU2DvO2NCGeLY">via GIPHY</a></p>',
-		keyword:"pie chart"
+		keyword:["pie chart", "chart", "data analysis", "dataset"]
 	},
 	{
-		id: 37, 
+		id: 37,
 		question: '<iframe src="https://giphy.com/embed/8gNQZ9IpkcdiAjfOgN" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/illustration-marketing-data-8gNQZ9IpkcdiAjfOgN">via GIPHY</a></p>',
-		keyword:"area chart"
+		keyword:["area chart", "chart", "data analysis", "dataset"]
 	},
 	{
 		id: 38,
 		question: '<iframe src="https://giphy.com/embed/RfMFXMomqJFIWzlxOD" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/hyperrpg-twitch-kollok-kollok1991-RfMFXMomqJFIWzlxOD">via GIPHY</a></p>',
 		keyword:["document study", "study", "case study"]
-	}, 
+	},
 	{
-		id: 39, 
+		id: 39,
 		question: '<iframe src="https://giphy.com/embed/3Kp6sZlMqxphC" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/benglabs-httpswwwopenbeeldennlmedia10811-3Kp6sZlMqxphC">via GIPHY</a></p>',
 		keyword:["document study", "study", "case study"]
 	}

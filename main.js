@@ -114,7 +114,7 @@ let promptTexts = [
 	{
 		id:21,
 		question:"./images/prompts-pics/line-chart.png",
-		keyword: [line chart", "chart", "data analysis", "dataset"]
+		keyword: ["line chart", "chart", "data analysis", "dataset"]
 	},
 	{
 		id:22,
@@ -169,7 +169,7 @@ let promptTexts = [
 	{
 		id:32,
 		question:"./images/prompts-pics/scatter-chart.png",
-		keyword:[scatter chart", "chart", "data analysis", "dataset"]
+		keyword:["scatter chart", "chart", "data analysis", "dataset"]
 	},
 	{
 		id:33,
